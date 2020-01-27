@@ -1,0 +1,13 @@
+query PatientList {
+  PatientList {
+    entry {
+      resource {
+        ...on Patient {
+          id
+          resourceType
+          name { family }
+        }
+      }
+    }
+  }
+}

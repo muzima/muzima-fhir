@@ -115,43 +115,81 @@ class AppClient {
         apolloClient.query(q).enqueue(callBack)
     }
 
-    fun parsePerson(person: GetPersonByIdQuery.Person?) : Person {
-        var humanNames = mutableListOf<HumanName>()
-        var addresses = mutableListOf<Address>()
-        person?.name()?.forEach {
-            humanNames.add(parseHumanName(it))
+    /***
+     * Supposed to call query getpatientlistquery WIP
+     * Initialized Apollo client required.
+     */
+
+fun getPatientList(id: String, onSuccess: (String, Patient) -> Unit){
+    println("Calling PatientList for Patient with id $id...")
+    println("Building query...")
+    var q = PatientListQuery
+            .builder()
+            .build()
+    println("Query built!")
+    // Define a callback for the client to execute on completion
+    // Both onResponse and onFailure are required
+    val callBack = object : ApolloCall.Callback<PatientListQuery.Data>(){
+        override fun onResponse(response: Response<PatientListQuery.Data>) {
+            println("Callback onResponse called!")
+            var dataPatientList = response.data()?.PatientList()?.entry()
+            //var ret = "The callback returned successfully!"
+            var l = mutableListOf<Patient>()
+            dataPatientList?.forEach {
+
+            }
         }
-        person?.address()?.forEach{
-            addresses.add(parseAddress(it))
+        override fun onFailure(e: ApolloException) {
+            println("Callback onFailure called!")
+            println("exception was: ${e.message}")
+            println("exception was: ${e.stackTrace}")
+            throw e
         }
+    }
+    // Execute the query with the specified callback
+    apolloClient.query(q).enqueue(callBack)
+}
 
-        var mPerson = Person()
-        mPerson.name = humanNames
-        mPerson.address = addresses
-        mPerson.birthDate = parseDate(person?.birthDate() as String)
-        mPerson.gender = person?.gender().toString()
-        mPerson.active = person?.active()
 
-        return mPerson
+
+
+fun parsePerson(person: GetPersonByIdQuery.Person?) : Person {
+    var humanNames = mutableListOf<HumanName>()
+    var addresses = mutableListOf<Address>()
+    person?.name()?.forEach {
+        humanNames.add(parseHumanName(it))
+    }
+    person?.address()?.forEach{
+        addresses.add(parseAddress(it))
     }
 
-    fun parseHumanName(name: GetPersonByIdQuery.Name) : HumanName{
-        var mHumanName = HumanName()
-        mHumanName.family = name.family()
-        mHumanName.use = name.use() as String
-        mHumanName.text = name.text()
-        return mHumanName
-    }
+    var mPerson = Person()
+    mPerson.name = humanNames
+    mPerson.address = addresses
+    mPerson.birthDate = parseDate(person?.birthDate() as String)
+    mPerson.gender = person?.gender().toString()
+    mPerson.active = person?.active()
 
-    fun parseDate(date: String) : Date {
-        //var d: Date = gson.fromJson(date, Date::class.java)
-        var d = Instant.parse(date)
-        return Date.from(d)
-    }
+    return mPerson
+}
 
-    fun parseAddress(address: GetPersonByIdQuery.Address) : Address {
-        var mAddress = Address()
-        mAddress.line = address.line()
-        return mAddress
-    }
+fun parseHumanName(name: GetPersonByIdQuery.Name) : HumanName{
+    var mHumanName = HumanName()
+    mHumanName.family = name.family()
+    mHumanName.use = name.use() as String
+    mHumanName.text = name.text()
+    return mHumanName
+}
+
+fun parseDate(date: String) : Date {
+    //var d: Date = gson.fromJson(date, Date::class.java)
+    var d = Instant.parse(date)
+    return Date.from(d)
+}
+
+fun parseAddress(address: GetPersonByIdQuery.Address) : Address {
+    var mAddress = Address()
+    mAddress.line = address.line()
+    return mAddress
+}
 }
