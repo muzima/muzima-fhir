@@ -1,6 +1,8 @@
 package com.muzima.muzimafhir.activity
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.muzima.muzimafhir.R
@@ -11,35 +13,26 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    var persons = mutableListOf<Person>()
-    lateinit var mAdapter: FhirViewAdapter
-    lateinit var mLayoutManager: LinearLayoutManager
+    lateinit var personBtn : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // initialize person activity button
+        personBtn = personActivityBtn
+        personActivityBtn.setOnClickListener {
+            // Handler code here.
+            val intent = Intent(this, PersonActivity::class.java)
+            startActivity(intent)
+        }
 
-        mLayoutManager = LinearLayoutManager(this)
-        var recyclerView = recyclerview_main
-        mAdapter = FhirViewAdapter(persons)
-        recyclerView.adapter = mAdapter
-        recyclerView.layoutManager = mLayoutManager
     }
 
     override fun onStart() {
         super.onStart()
         var  appClient = AppClient()
-        appClient.getPerson("5dcaa7f02eb0b70e90761396") { s: String, p: Person -> callbackFunc(s, p)}
-    }
+        //appClient.getPerson("5dcaa7f02eb0b70e90761396") { s: String, p: Person -> callbackFunc(s, p)}
 
-    private fun callbackFunc(result: String, p: Person){
-        runOnUiThread {
-            // Stuff that updates the UI
-            println("Callback function called!")
-            println(result)
-            persons.add(p)
-            mAdapter.notifyDataSetChanged()
-        }
     }
 }
