@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     lateinit var personBtn : Button
+    lateinit var patientBtn : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +28,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        patientBtn = patientActivityBtn
+        patientActivityBtn.setOnClickListener{
+            val intent = Intent(this, PatientActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onStart() {

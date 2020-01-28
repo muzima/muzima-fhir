@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient1"
     tools:context=".activity.LoginActivity">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -67,7 +66,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/muzima_logo_transparent" />
+        />
 
     <Button
         android:id="@+id/login_forgotten_button"
