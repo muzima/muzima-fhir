@@ -1,0 +1,17 @@
+mutation PersonCreate($person: Person_Input!) {
+    PersonCreate(resource: $person)
+    {
+        id
+        name {
+            use
+            text
+            family
+        }
+        birthDate
+        gender
+        active
+        address {
+            line
+        }
+    }
+}
