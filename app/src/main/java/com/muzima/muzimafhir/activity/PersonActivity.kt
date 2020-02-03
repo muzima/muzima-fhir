@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.muzima.muzimafhir.R
 import com.muzima.muzimafhir.data.AppClient
 import com.muzima.muzimafhir.data.Person
+import com.muzima.muzimafhir.data.types.HumanName
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_person.*
+import typeFixFolder.type.HumanName_Input
 import typeFixFolder.type.Person_Enum_input
 import typeFixFolder.type.Person_Input
 
@@ -31,7 +33,7 @@ class PersonActivity : AppCompatActivity() {
 
         createPerson = PersonCreateBtn
         createPerson.setOnClickListener {
-
+            createPerson()
         }
 
         mLayoutManager = LinearLayoutManager(this)
@@ -72,13 +74,27 @@ class PersonActivity : AppCompatActivity() {
 
     }
 
-    /*private fun createPerson() {
+    private fun createPerson() {
         // create person
         var p : Person = Person(null, null, null, "male", null, null, null, null)
         var pResourceType : Person_Enum_input = Person_Enum_input.PERSON
-        var pInput : Person_Input = Person_Input(pResourceType, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)
+
+        // name test
+        var name = HumanName_Input
+                .builder()
+                .family("Foldøy")
+                .build()
+
+        //var pInput : Person_Input = Person_Input(pResourceType, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)
+        var pInput = Person_Input
+                .builder()
+                .resourceType(pResourceType)
+                .gender("male")
+                .build()
+
+
 
         var appClient = AppClient()
         appClient.createPerson(pInput){ s: String, p: Person -> callbackFunc(s, p)}
-    }*/
+    }
 }
