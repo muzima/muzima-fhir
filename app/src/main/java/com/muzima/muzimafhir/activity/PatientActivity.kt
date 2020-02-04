@@ -34,12 +34,12 @@ class PatientActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        var  appClient = AppClient()
+        var appClient = AppClient()
         //appClient.getPatient("5dcaa7f02eb0b70e90761396") { s: String, p: Patient -> callbackFunc(s, p)}
 
     }
 
-    private fun callbackFunc(result: String, p: Patient){
+    private fun callbackFunc(result: String, p: Patient) {
         runOnUiThread {
             // Stuff that updates the UI
             println("Callback function called!")
@@ -53,8 +53,8 @@ class PatientActivity : AppCompatActivity() {
         //var p1: Patient = Patient(null, null, null, "male", null, null, null, null)
         //patients.add(p1)
         //mAdapter.notifyDataSetChanged()
-        var  appClient = AppClient()
-        appClient.getPatient("5e2eb69b21c7a2122726889f") { s: String, p: Patient -> callbackFunc(s, p)}
+        var appClient = AppClient()
+        appClient.getPatient("5e2eb69b21c7a2122726889f") { s: String, p: Patient -> callbackFunc(s, p) }
     }
 
 }
