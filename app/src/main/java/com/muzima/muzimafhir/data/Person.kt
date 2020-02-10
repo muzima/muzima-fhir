@@ -4,12 +4,12 @@ import com.muzima.muzimafhir.data.types.*
 import java.util.*
 
 data class Person(
-        var identifier: List<Identifier>? = null,
-        var name: List<HumanName>? = null,
-        var telecom: List<ContactPoint>? = null,
+        var identifier: MutableList<Identifier>? = null,
+        var name: MutableList<HumanName>? = null,
+        var telecom: MutableList<ContactPoint>? = null,
         var gender: String? = null,
         var birthDate: Date? = null,
-        var address: List<Address>? = null,
+        var address: MutableList<Address>? = null,
         var photo: Attachment? = null,
         var active: Boolean? = null
 ){
