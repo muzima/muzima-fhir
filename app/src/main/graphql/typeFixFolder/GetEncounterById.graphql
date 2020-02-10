@@ -1,0 +1,8 @@
+query GetEncounterById($id:token) {
+
+    Encounter(_id:$id){
+        id
+        status
+    }
+
+}

@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var personBtn : Button
     lateinit var patientBtn : Button
+    lateinit var encounterBtn : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +32,12 @@ class MainActivity : AppCompatActivity() {
         patientBtn = patientActivityBtn
         patientActivityBtn.setOnClickListener{
             val intent = Intent(this, PatientActivity::class.java)
+            startActivity(intent)
+        }
+
+        encounterBtn = encounterActivityBtn
+        encounterActivityBtn.setOnClickListener{
+            val intent = Intent(this, EncounterActivity::class.java)
             startActivity(intent)
         }
     }
