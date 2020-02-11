@@ -1,6 +1,6 @@
 package com.muzima.muzimafhir.data.types
 
 data class CodeableConcept(
-        val coding: Coding? = null,
-        val text: String? = null
+        var coding: List<Coding>? = null,
+        var text: String? = null
 )

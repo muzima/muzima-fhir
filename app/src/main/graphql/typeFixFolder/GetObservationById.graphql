@@ -1,0 +1,9 @@
+query GetObservationById($id:token) {
+    Observation(_id:$id){
+        id
+        status
+        valueString
+        valueInteger
+        valueDateTime
+    }
+}

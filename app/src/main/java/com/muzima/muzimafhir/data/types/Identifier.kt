@@ -1,9 +1,9 @@
 package com.muzima.muzimafhir.data.types
 
 data class Identifier(
-        val use: String? = null,
-        val type: CodeableConcept? = null,
-        val system: String? = null,
-        val value: String? = null,
-        val period: Period? = null
+        var use: String? = null,
+        var type: CodeableConcept? = null,
+        var system: String? = null,
+        var value: String? = null,
+        var period: Period? = null
 )

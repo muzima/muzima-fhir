@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.PatientActivity">
+    tools:context=".activity.ObservationActivity">
 
     <Spinner
-        android:id="@+id/spinner_Patient"
+        android:id="@+id/spinner_observation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -18,29 +18,29 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/getPatientButton"
+        android:id="@+id/getObservationBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Get Patient from server"
+        android:text="Get observation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_Patient"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_observation"
 
         />
 
     <Button
-        android:id="@+id/createPatientButton"
+        android:id="@+id/ObservationCreateBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Send Patient Resource To Server"
+        android:text="Create Observation Mutation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/getPatientButton"
+        app:layout_constraintTop_toBottomOf="@+id/getObservationBtn"
 
         />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_Patient"
+        android:id="@+id/recyclerview_observation"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -50,6 +50,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createPatientButton" />
+        app:layout_constraintTop_toBottomOf="@+id/ObservationCreateBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

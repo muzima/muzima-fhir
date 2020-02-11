@@ -3,6 +3,7 @@ package com.muzima.muzimafhir.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import androidx.annotation.Nullable
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.muzima.muzimafhir.R
 import com.muzima.muzimafhir.data.AppClient
@@ -75,24 +76,29 @@ class PersonActivity : AppCompatActivity() {
     }
 
     private fun createPerson() {
-        // create person
-        var p : Person = Person(null, null, null, "male", null, null, null, null)
         var pResourceType : Person_Enum_input = Person_Enum_input.PERSON
 
-        // name test
-        var name = HumanName_Input
+        // Test of adding given and family names of type HumanName_Input
+        var givenNames = mutableListOf<String>()
+        givenNames.add("Kolbein")
+        givenNames.add("Toreson")
+
+        var familyName = HumanName_Input
                 .builder()
                 .family("Foldøy")
+                .given(givenNames)
                 .build()
+
+        var names = mutableListOf<HumanName_Input>()
+        names.add(familyName)
 
         //var pInput : Person_Input = Person_Input(pResourceType, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)
         var pInput = Person_Input
                 .builder()
                 .resourceType(pResourceType)
                 .gender("male")
+                .name(names)
                 .build()
-
-
 
         var appClient = AppClient()
         appClient.createPerson(pInput){ s: String, p: Person -> callbackFunc(s, p)}

@@ -8,22 +8,33 @@ import com.muzima.muzimafhir.R
 import com.muzima.muzimafhir.data.AppClient
 import com.muzima.muzimafhir.data.Patient
 import kotlinx.android.synthetic.main.activity_patient.*
+import typeFixFolder.type.HumanName_Input
+import typeFixFolder.type.Patient_Enum_input
+import typeFixFolder.type.Patient_Input
+import typeFixFolder.type.Person_Enum_input
 
 class PatientActivity : AppCompatActivity() {
 
     var patients = mutableListOf<Patient>()
     lateinit var mAdapter: PatientViewAdapter
     lateinit var mLayoutManager: LinearLayoutManager
-    lateinit var generatePatient: Button
+    lateinit var getPatientBtn: Button
+    lateinit var createPatientBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_patient)
 
-        generatePatient = generatePatientBtn
-        generatePatient.setOnClickListener {
-            generatePatient()
+        getPatientBtn = getPatientButton
+        getPatientBtn.setOnClickListener {
+            getPatient()
         }
+
+        createPatientBtn = createPatientButton
+        createPatientBtn.setOnClickListener {
+            createPatient()
+        }
+
         mLayoutManager = LinearLayoutManager(this)
         var recyclerView = recyclerview_Patient
         mAdapter = PatientViewAdapter(patients)
@@ -49,12 +60,41 @@ class PatientActivity : AppCompatActivity() {
         }
     }
 
-    private fun generatePatient() {
+    private fun getPatient() {
         //var p1: Patient = Patient(null, null, null, "male", null, null, null, null)
         //patients.add(p1)
         //mAdapter.notifyDataSetChanged()
         var appClient = AppClient()
         appClient.getPatient("5e2eb69b21c7a2122726889f") { s: String, p: Patient -> callbackFunc(s, p) }
+    }
+
+    private fun createPatient() {
+
+        var pResourceType : Patient_Enum_input = Patient_Enum_input.PATIENT
+
+        // Test of adding given and family names of type HumanName_Input
+        var givenNames = mutableListOf<String>()
+        givenNames.add("Klara")
+        givenNames.add("Tora")
+
+        var familyName = HumanName_Input
+                .builder()
+                .family("Fleksnes")
+                .given(givenNames)
+                .build()
+
+        var names = mutableListOf<HumanName_Input>()
+        names.add(familyName)
+
+        var pInput = Patient_Input
+                .builder()
+                .resourceType(pResourceType)
+                .gender("female")
+                .name(names)
+                .build()
+
+        var appClient = AppClient()
+        appClient.createPatient(pInput){ s: String, p: Patient -> callbackFunc(s, p)}
     }
 
 }

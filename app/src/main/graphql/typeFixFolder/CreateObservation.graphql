@@ -1,0 +1,9 @@
+mutation ObservationCreate($observation: Observation_Input!) {
+    ObservationCreate(resource: $observation){
+        id
+        status
+        valueString
+        valueInteger
+        valueDateTime
+    }
+}

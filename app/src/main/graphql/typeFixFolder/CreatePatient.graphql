@@ -1,0 +1,17 @@
+mutation PatientCreate($patient: Patient_Input!) {
+    PatientCreate(resource: $patient)
+    {
+        id
+        gender
+        birthDate
+        active
+        name {
+            use
+            text
+            family
+        }
+        address {
+            line
+        }
+    }
+}
