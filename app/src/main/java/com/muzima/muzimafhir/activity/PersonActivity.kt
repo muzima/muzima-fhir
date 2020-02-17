@@ -3,7 +3,6 @@ package com.muzima.muzimafhir.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import androidx.annotation.Nullable
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.muzima.muzimafhir.R
 import com.muzima.muzimafhir.fhir.client.AppClient
@@ -18,16 +17,16 @@ class PersonActivity : AppCompatActivity() {
     var persons = mutableListOf<Person>()
     lateinit var mAdapter: FhirViewAdapter
     lateinit var mLayoutManager: LinearLayoutManager
-    lateinit var generatePerson : Button
+    lateinit var getPerson : Button
     lateinit var createPerson : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_person)
 
-        generatePerson = generatePersonBtn
-        generatePerson.setOnClickListener{
-            generatePerson()
+        getPerson = generatePersonBtn
+        getPerson.setOnClickListener{
+            getPerson()
         }
 
         createPerson = PersonCreateBtn
@@ -59,13 +58,13 @@ class PersonActivity : AppCompatActivity() {
         }
     }
 
-    private fun generatePerson() {
+    private fun getPerson() {
 
         var appClient = AppClient()
 
-        /*
-        appClient.getPerson("5dc2c3b0b16c6834d80bed75") { s: String, p: Person -> callbackFunc(s, p)}
 
+        appClient.getPerson("5dc2c3b0b16c6834d80bed75") { s: String, p: Person -> callbackFunc(s, p)}
+        /*
         var p1: Person = Person(null, null, null, "male", null, null, null, null)
         persons.add(p1)
         mAdapter.notifyDataSetChanged()

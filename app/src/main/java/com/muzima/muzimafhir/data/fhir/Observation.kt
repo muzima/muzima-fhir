@@ -8,7 +8,7 @@ data class Observation(
         var identifier: MutableList<Identifier>? = null,
         var status: String? = null,
         var category: CodeableConcept? = null,
-        var code: List<CodeableConcept>? = null,
+        var code: CodeableConcept? = null,
         var issued: Date? = null,
         var valueCodeableConcept: CodeableConcept? = null,
         var valueString: String? = null,
