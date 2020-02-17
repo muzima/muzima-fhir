@@ -5,7 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.muzima.muzimafhir.activity.ResourceListEntry
 import com.muzima.muzimafhir.data.fhir.Person
+import com.muzima.muzimafhir.fhir.dao.ObservationDao
+import com.muzima.muzimafhir.fhir.dao.PatientDao
 import com.muzima.muzimafhir.fhir.dao.PersonDao
+import com.muzima.muzimafhir.fhir.dao.implementation.ObservationDaoImpl
+import com.muzima.muzimafhir.fhir.dao.implementation.PatientDaoImpl
 import com.muzima.muzimafhir.fhir.dao.implementation.PersonDaoImpl
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -21,6 +25,8 @@ class DisplayResourcesViewModel : ViewModel() {
     val availableResources = listOf("Person", "Patient", "Observation", "Encounter")
     val TAG = "DisplayResourcesViewModel" // Debugging tag
     private val personDao: PersonDao // DAO interface
+    private val patientDao: PatientDao
+    private val observationDao: ObservationDao
 
     // LiveData lets the registered activity listen for changes in the dataset.
     // Call 'postValue' to update the dataset and notify all listeners.
@@ -29,6 +35,8 @@ class DisplayResourcesViewModel : ViewModel() {
 
     init {
         personDao = PersonDaoImpl()
+        patientDao = PatientDaoImpl()
+        observationDao = ObservationDaoImpl()
         getPersonList()
         getPerson()
         Log.d(TAG, "viewModel created")
@@ -68,4 +76,19 @@ class DisplayResourcesViewModel : ViewModel() {
         }
         return entries
     }
+
+    /**
+     *  Get an patient by launching a coroutine within the scope of the application's lifespan
+     */
+    private fun getPatient() = GlobalScope.launch {
+        patientDao.getPatient("5e2eb69b21c7a2122726889f")
+    }
+
+    /**
+     *  Get an observation by launching a coroutine within the scope of the application's lifespan
+     */
+    private fun getObservation() = GlobalScope.launch {
+        observationDao.getObservation("5e45550f58b312549ee0e1c3")
+    }
+
 }
