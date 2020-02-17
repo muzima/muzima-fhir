@@ -11,6 +11,8 @@ import com.muzima.muzimafhir.data.fhir.Observation
 import com.muzima.muzimafhir.data.fhir.Patient
 import com.muzima.muzimafhir.data.fhir.Person
 import com.muzima.muzimafhir.data.fhir.types.Address
+import com.muzima.muzimafhir.data.fhir.types.CodeableConcept
+import com.muzima.muzimafhir.data.fhir.types.Coding
 import com.muzima.muzimafhir.data.fhir.types.HumanName
 import okhttp3.OkHttpClient
 import typeFixFolder.type.Observation_Input
@@ -321,7 +323,7 @@ class AppClient {
                 var dataObservation = response.data()?.Observation()
                 //var ret = "The callback returned successfully!"
                 println("Observation as string: " + parseObservation(dataObservation).toString())
-                var ret = dataObservation?.valueString().toString()
+                var ret = dataObservation?.id().toString()
                 onSuccess(ret, parseObservation(dataObservation))
             }
             override fun onFailure(e: ApolloException) {
@@ -374,10 +376,32 @@ class AppClient {
 
         var mObservation = Observation()
         mObservation.status = observation?.status().toString()
+        mObservation.code = parseCode(observation?.code())
         mObservation.valueString = observation?.valueString()
         mObservation.valueInteger = observation?.valueInteger()
-        mObservation.valueDateTime = parseDate(observation?.valueDateTime() as String)
+        //mObservation.valueDateTime = parseDate(observation?.valueDateTime() as String)
         return mObservation
+    }
+
+    fun parseCode(code: GetObservationByIdQuery.Code?) : CodeableConcept {
+        var mCodeableConcept = CodeableConcept()
+        var codingList = mutableListOf<Coding?>()
+        code?.coding()?.forEach {
+            codingList.add(parseCoding(it))
+        }
+        mCodeableConcept.coding = codingList
+        mCodeableConcept.text = code?.text()
+        return mCodeableConcept
+    }
+
+    fun parseCoding(coding: GetObservationByIdQuery.Coding?) : Coding {
+        var mCoding = Coding()
+        mCoding.code = coding?.code().toString()
+        mCoding.display = coding?.display()
+        mCoding.system = coding?.system().toString()
+        mCoding.version = coding?.version()
+        mCoding.userSelected = coding?.userSelected()
+        return mCoding
     }
 
 

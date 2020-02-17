@@ -9,8 +9,11 @@ import com.muzima.muzimafhir.fhir.client.AppClient
 import com.muzima.muzimafhir.data.fhir.Observation
 import kotlinx.android.synthetic.main.activity_observation.*
 import typeFixFolder.type.CodeableConcept_Input
+import typeFixFolder.type.Coding_Input
 import typeFixFolder.type.Observation_Enum_input
 import typeFixFolder.type.Observation_Input
+import java.time.LocalDateTime
+import java.util.*
 
 class ObservationActivity : AppCompatActivity() {
 
@@ -54,7 +57,7 @@ class ObservationActivity : AppCompatActivity() {
 
     private fun getObservation() {
         var appClient = AppClient()
-        appClient.getObservation("5dcd09d3ef744e3870c8d7d4") {
+        appClient.getObservation("5e45550f58b312549ee0e1c3") {
             s: String, o: Observation -> callbackFunc(s, o)
         }
     }
@@ -63,18 +66,29 @@ class ObservationActivity : AppCompatActivity() {
 
         var oResourceType : Observation_Enum_input = Observation_Enum_input.OBSERVATION
 
+        var codingList = mutableListOf<Coding_Input>()
+        var codingInput = Coding_Input
+                .builder()
+                .display("Display string")
+                .build()
+
+        codingList.add(codingInput)
+
         var code = CodeableConcept_Input
                 .builder()
                 .text("A code text")
+                .coding(codingList)
                 .build()
+        //val dateTime = LocalDateTime.now()
 
         var oInput = Observation_Input
                 .builder()
                 .resourceType(oResourceType)
                 .code(code)
-                .status("Gucci")
-                .valueString("Good condition")
+                .status("final")
+                //.valueString("Good condition")
                 .valueInteger(1337)
+                //.valueDateTime(dateTime)
                 .build()
 
         var appClient = AppClient()
