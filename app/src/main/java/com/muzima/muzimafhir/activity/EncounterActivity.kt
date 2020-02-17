@@ -6,7 +6,7 @@ import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.muzima.muzimafhir.R
 import com.muzima.muzimafhir.fhir.client.AppClient
-import com.muzima.muzimafhir.data.Encounter
+import com.muzima.muzimafhir.data.fhir.Encounter
 import kotlinx.android.synthetic.main.activity_encounter.*
 import typeFixFolder.type.Coding_Input
 import typeFixFolder.type.Encounter_Enum_input
@@ -73,7 +73,7 @@ class EncounterActivity : AppCompatActivity() {
                 .build()
 
         var appClient = AppClient()
-        appClient.createEncounter(eInput){s:String, e:Encounter -> callbackFunc(s,e)}
+        appClient.createEncounter(eInput){s:String, e: Encounter -> callbackFunc(s,e)}
     }
 
 }

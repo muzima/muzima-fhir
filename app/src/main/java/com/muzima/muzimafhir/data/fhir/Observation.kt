@@ -1,7 +1,7 @@
 package com.muzima.muzimafhir.data.fhir
 
 import com.muzima.muzimafhir.data.fhir.types.Identifier
-import com.muzima.muzimafhir.data.types.CodeableConcept
+import com.muzima.muzimafhir.data.fhir.types.CodeableConcept
 import java.util.*
 
 data class Observation(

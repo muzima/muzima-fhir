@@ -1,4 +1,4 @@
-package com.muzima.muzimafhir.data
+package com.muzima.muzimafhir.data.fhir
 
 import com.muzima.muzimafhir.data.fhir.types.CodeableConcept
 import com.muzima.muzimafhir.data.fhir.types.Identifier

@@ -6,7 +6,7 @@ import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
 import com.google.gson.Gson
-import com.muzima.muzimafhir.data.Encounter
+import com.muzima.muzimafhir.data.fhir.Encounter
 import com.muzima.muzimafhir.data.fhir.Observation
 import com.muzima.muzimafhir.data.fhir.Patient
 import com.muzima.muzimafhir.data.fhir.Person
