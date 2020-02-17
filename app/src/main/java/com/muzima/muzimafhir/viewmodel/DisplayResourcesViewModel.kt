@@ -10,11 +10,21 @@ import com.muzima.muzimafhir.fhir.dao.implementation.PersonDaoImpl
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
+/***
+ *   A class containing the data and business logic required for the view to perform its tasks.
+ *   A ViewModel class must be registered with an activity, and survives configuration changes
+ *   and lifecycle events. Do not reference this class from within a lifecycle event.
+ */
 class DisplayResourcesViewModel : ViewModel() {
 
+    // Available resource that should be visible in the activity spinner.
     val availableResources = listOf("Person", "Patient", "Observation", "Encounter")
-    val TAG = "DisplayResourcesViewModel"
-    private val personDao: PersonDao
+    val TAG = "DisplayResourcesViewModel" // Debugging tag
+    private val personDao: PersonDao // DAO interface
+
+    // LiveData lets the registered activity listen for changes in the dataset.
+    // Call 'postValue' to update the dataset and notify all listeners.
+    // postValue must be called asynchronously.
     val entries: MutableLiveData<MutableList<ResourceListEntry>> = MutableLiveData()
 
     init {
@@ -24,10 +34,17 @@ class DisplayResourcesViewModel : ViewModel() {
         Log.d(TAG, "viewModel created")
     }
 
+    /**
+     *  Get a person by launching a coroutine within the scope of the application's lifespan
+     */
     private fun getPerson() = GlobalScope.launch {
         personDao.getPerson("5dcaa7f02eb0b70e90761396")
     }
 
+    /**
+     *  Get a list of people by launching a coroutine within the scope of the application's lifespan
+     *  Maps the result of the operation to the entries dataset.
+     */
     private fun getPersonList() = GlobalScope.launch {
         Log.d(TAG, "getPersonList called")
         val people = personDao.getPersonList()
@@ -36,6 +53,10 @@ class DisplayResourcesViewModel : ViewModel() {
         entries.postValue(personEntries)
     }
 
+    /**
+     * Maps a list of people to a list of entries.
+     * NB: Likely doesn't behave as expected due to all the nullable fields in a person object.
+     */
     private fun personMapToResourceEntry(people: List<Person>): MutableList<ResourceListEntry> {
         val entries = mutableListOf<ResourceListEntry>()
         people.forEach { person ->
