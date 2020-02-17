@@ -114,11 +114,14 @@ class PersonQuery {
                                             if (p?.name() != null) {
                                                 p.name()?.forEach { name ->
                                                     var humanName = HumanName()
-                                                    humanName.use = name.use() as String
-                                                    humanName.family = name.family()
+                                                    humanName.use = name.use().toString()
+                                                    Log.d(TAG, "field \"humanName.use\" for a person entry was set to ${humanName.use}")
+                                                    humanName.family = name.family().toString()
+                                                    Log.d(TAG, "field \"humanName.family\" for a person entry was set to ${humanName.family}")
                                                     humanName.text = name.text()
+                                                    Log.d(TAG, "field \"humanName.text\" for a person entry was set to ${humanName.text}")
                                                     person.name?.add(humanName)
-                                                    Log.d(TAG, "field \"humanName\" for a person entry was set to $name")
+                                                    //Log.d(TAG, "field \"humanName\" for a person entry was set to $name")
                                                 }
                                             } else {
                                                 Log.d(TAG, "field \"name\" was null")
@@ -126,9 +129,12 @@ class PersonQuery {
                                             if (p?.address() != null) {
                                                 p.address()?.forEach { a ->
                                                     var address = Address()
-                                                    address.line = a.line()
+                                                    a.line()?.forEach {line ->
+                                                        address.line?.add(line)
+                                                    }
                                                     person.address?.add(address)
-                                                    Log.d(TAG, "field \"address\" for a person entry was set to $a")
+                                                    Log.d(TAG, "field \"address.line\" for a person entry was set to ${address.line}")
+                                                    //Log.d(TAG, "field \"address\" for a person entry was set to $a")
                                                 }
                                             } else {
                                                 Log.d(TAG, "field \"address\" was null")
