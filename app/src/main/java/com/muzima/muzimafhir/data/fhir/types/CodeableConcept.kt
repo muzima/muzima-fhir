@@ -1,7 +1,7 @@
 package com.muzima.muzimafhir.data.fhir.types
 
 data class CodeableConcept(
-        val coding: Coding? = null,
+        var coding: MutableList<Coding?> = mutableListOf(),
         val text: String? = null
 ) {
     override fun toString(): String {
