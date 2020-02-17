@@ -12,17 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.ObservationActivity"></activity>
-        <activity android:name=".activity.EncounterActivity" />
-        <activity android:name=".activity.PatientActivity" />
-        <activity android:name=".activity.PersonActivity" />
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.DisplayResourcesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.EncounterActivity" />
+        <activity android:name=".activity.PatientActivity" />
+        <activity android:name=".activity.PersonActivity" />
+        <activity android:name=".activity.MainActivity"/>
     </application>
 
 </manifest>

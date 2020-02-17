@@ -4,10 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.muzima.muzimafhir.R
-import com.muzima.muzimafhir.data.AppClient
-import com.muzima.muzimafhir.data.Person
+import com.muzima.muzimafhir.fhir.client.AppClient
 import kotlinx.android.synthetic.main.activity_main.*
 
 

@@ -1,6 +1,6 @@
-package com.muzima.muzimafhir.data
+package com.muzima.muzimafhir.data.fhir
 
-import com.muzima.muzimafhir.data.types.*
+import com.muzima.muzimafhir.data.fhir.types.*
 import java.util.*
 
 data class Patient(

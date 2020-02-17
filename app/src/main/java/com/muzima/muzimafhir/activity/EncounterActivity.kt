@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.muzima.muzimafhir.R
-import com.muzima.muzimafhir.data.AppClient
+import com.muzima.muzimafhir.fhir.client.AppClient
 import com.muzima.muzimafhir.data.Encounter
 import kotlinx.android.synthetic.main.activity_encounter.*
 import typeFixFolder.type.Coding_Input

@@ -1,19 +1,25 @@
 package com.muzima.muzimafhir.fhir.dao.implementation
 
+import android.util.Log
 import com.muzima.muzimafhir.fhir.dao.PersonDao
-import com.muzima.muzimafhir.fhir.client.ResourceClient
-import com.muzima.muzimafhir.data.Person
+import com.muzima.muzimafhir.data.fhir.Person
+import com.muzima.muzimafhir.fhir.query.PersonQuery
 
 class PersonDaoImpl : PersonDao {
 
-    private lateinit var client: ResourceClient
+    private val TAG = "PersonDao"
+    private val personQuery = PersonQuery()
 
-    override fun getPerson(id: String) : Person {
-        return Person()
+    override suspend fun getPerson(id: String) : Person {
+        val person = personQuery.queryPersonById(id)
+        Log.d(TAG, "getPerson returned person: $person")
+        return personQuery.queryPersonById(id)
     }
 
-    override fun getPersonList() : List<Person> {
-        return listOf<Person>()
+    override suspend fun getPersonList() : List<Person> {
+        val personList = personQuery.queryPersonList()
+        Log.d(TAG, "getPersonList returned with ${personList.size} elements")
+        return personList
     }
 
     override fun deletePerson(id: String, p: Person) {

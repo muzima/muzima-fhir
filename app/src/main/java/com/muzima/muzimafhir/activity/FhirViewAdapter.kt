@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.muzima.muzimafhir.R
-import com.muzima.muzimafhir.data.Person
+import com.muzima.muzimafhir.data.fhir.Person
 import kotlinx.android.synthetic.main.item_list_entry.view.*
 
 class FhirViewAdapter(private val dataset: MutableList<Person>) :

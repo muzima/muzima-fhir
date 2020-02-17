@@ -1,4 +1,4 @@
-package com.muzima.muzimafhir.data.types
+package com.muzima.muzimafhir.data.fhir.types
 
 import java.util.*
 
@@ -11,4 +11,8 @@ data class Attachment(
     var hash: Base64? = null,
     var title: String? = null,
     var creation: Date? = null
-)
+) {
+    override fun toString(): String {
+        return "Attachment(contentType=$contentType, language=$language, data=$data, url=$url, size=$size, hash=$hash, title=$title, creation=$creation)"
+    }
+}

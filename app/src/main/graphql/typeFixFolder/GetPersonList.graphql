@@ -2,20 +2,22 @@ query GetPersonList {
     PersonList {
         entry {
             resource {
-                ...on Person {
-                    name {
-                        use
-                        text
-                        family
-                    }
-                    birthDate
-                    gender
-                    active
-                    address {
-                        line
-                    }
-                }
+                ... personEntry
             }
         }
+    }
+}
+
+fragment personEntry on Person {
+    name {
+        use
+        text
+        family
+    }
+    birthDate
+    gender
+    active
+    address {
+        line
     }
 }

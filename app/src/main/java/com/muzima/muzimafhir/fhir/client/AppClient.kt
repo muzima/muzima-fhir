@@ -1,4 +1,4 @@
-package com.muzima.muzimafhir.data
+package com.muzima.muzimafhir.fhir.client
 
 import typeFixFolder.*
 import com.apollographql.apollo.ApolloCall
@@ -6,10 +6,12 @@ import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
 import com.google.gson.Gson
-import com.muzima.muzimafhir.data.types.Address
-import com.muzima.muzimafhir.data.types.CodeableConcept
-import com.muzima.muzimafhir.data.types.HumanName
-import com.muzima.muzimafhir.data.types.Identifier
+import com.muzima.muzimafhir.data.Encounter
+import com.muzima.muzimafhir.data.fhir.Observation
+import com.muzima.muzimafhir.data.fhir.Patient
+import com.muzima.muzimafhir.data.fhir.Person
+import com.muzima.muzimafhir.data.fhir.types.Address
+import com.muzima.muzimafhir.data.fhir.types.HumanName
 import okhttp3.OkHttpClient
 import typeFixFolder.type.Observation_Input
 import typeFixFolder.type.Patient_Input
@@ -19,8 +21,6 @@ import java.time.Instant
 import java.util.*
 
 class AppClient {
-
-
     var gson: Gson = Gson()
     private var BASE_URL = "http://45.79.198.132:3000/4_0_0/\$graphql"
     // Android VM's host address, use either a remote server IP
@@ -456,7 +456,7 @@ class AppClient {
         return mAddress
     }
 
-    fun parseEncounter(encounter: GetEncounterByIdQuery.Encounter?): Encounter{
+    fun parseEncounter(encounter: GetEncounterByIdQuery.Encounter?): Encounter {
         var mEncounter = Encounter()
         mEncounter.status = encounter?.status().toString()
         return mEncounter;

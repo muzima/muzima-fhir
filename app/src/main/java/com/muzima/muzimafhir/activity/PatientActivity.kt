@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.muzima.muzimafhir.R
-import com.muzima.muzimafhir.data.AppClient
-import com.muzima.muzimafhir.data.Patient
+import com.muzima.muzimafhir.fhir.client.AppClient
+import com.muzima.muzimafhir.data.fhir.Patient
 import kotlinx.android.synthetic.main.activity_patient.*
 import typeFixFolder.type.HumanName_Input
 import typeFixFolder.type.Patient_Enum_input

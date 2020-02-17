@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.muzima.muzimafhir.R
-import com.muzima.muzimafhir.data.Patient
+import com.muzima.muzimafhir.data.fhir.Patient
 import kotlinx.android.synthetic.main.item_list_entry.view.*
 
 class PatientViewAdapter(private val dataset: MutableList<Patient>) :

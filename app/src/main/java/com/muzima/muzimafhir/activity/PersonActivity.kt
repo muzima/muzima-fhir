@@ -6,10 +6,8 @@ import android.widget.Button
 import androidx.annotation.Nullable
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.muzima.muzimafhir.R
-import com.muzima.muzimafhir.data.AppClient
-import com.muzima.muzimafhir.data.Person
-import com.muzima.muzimafhir.data.types.HumanName
-import kotlinx.android.synthetic.main.activity_main.*
+import com.muzima.muzimafhir.fhir.client.AppClient
+import com.muzima.muzimafhir.data.fhir.Person
 import kotlinx.android.synthetic.main.activity_person.*
 import typeFixFolder.type.HumanName_Input
 import typeFixFolder.type.Person_Enum_input

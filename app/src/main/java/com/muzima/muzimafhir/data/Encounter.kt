@@ -1,6 +1,7 @@
 package com.muzima.muzimafhir.data
 
-import com.muzima.muzimafhir.data.types.*
+import com.muzima.muzimafhir.data.fhir.types.CodeableConcept
+import com.muzima.muzimafhir.data.fhir.types.Identifier
 import java.util.*
 
 data class Encounter(
@@ -16,10 +17,6 @@ data class Encounter(
         var reasonReference: String? = null,
         var diagnosis: List<String>? = null,
         var location: String? = null
-
-
-
-
 ){
     override fun toString(): String {
         return "identifier : " + identifier.toString() + "\n" +

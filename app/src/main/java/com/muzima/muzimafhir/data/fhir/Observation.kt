@@ -1,9 +1,7 @@
-package com.muzima.muzimafhir.data
+package com.muzima.muzimafhir.data.fhir
 
+import com.muzima.muzimafhir.data.fhir.types.Identifier
 import com.muzima.muzimafhir.data.types.CodeableConcept
-import com.muzima.muzimafhir.data.types.Identifier
-import com.muzima.muzimafhir.data.types.Period
-import typeFixFolder.GetObservationByIdQuery
 import java.util.*
 
 data class Observation(

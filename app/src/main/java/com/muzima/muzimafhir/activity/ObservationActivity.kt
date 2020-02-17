@@ -1,19 +1,16 @@
 package com.muzima.muzimafhir.activity
 
-import android.icu.util.LocaleData
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.muzima.muzimafhir.R
-import com.muzima.muzimafhir.data.AppClient
-import com.muzima.muzimafhir.data.Observation
-import com.muzima.muzimafhir.data.types.CodeableConcept
+import com.muzima.muzimafhir.fhir.client.AppClient
+import com.muzima.muzimafhir.data.fhir.Observation
 import kotlinx.android.synthetic.main.activity_observation.*
 import typeFixFolder.type.CodeableConcept_Input
 import typeFixFolder.type.Observation_Enum_input
 import typeFixFolder.type.Observation_Input
-import java.util.*
 
 class ObservationActivity : AppCompatActivity() {
 

@@ -1,10 +1,10 @@
 package com.muzima.muzimafhir.fhir.dao
 
-import com.muzima.muzimafhir.data.Person
+import com.muzima.muzimafhir.data.fhir.Person
 
 interface PersonDao {
-    fun getPerson(id: String) : Person
-    fun getPersonList() : List<Person>
+    suspend fun getPerson(id: String) : Person
+    suspend fun getPersonList() : List<Person>
     fun deletePerson(id: String, p: Person)
     fun updatePerson(id: String, p: Person)
 }
