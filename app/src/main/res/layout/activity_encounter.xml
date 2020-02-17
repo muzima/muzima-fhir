@@ -26,6 +26,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner_Encounter" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send Encounter to server"
+        android:id="@+id/createEncounterBtn"
+        app:layout_constraintTop_toBottomOf="@+id/getEncounterBtn"
+        app:layout_constraintStart_toStartOf="@+id/getEncounterBtn" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_Encounter"
         android:layout_width="0dp"
@@ -37,6 +45,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/getEncounterBtn"/>
+        app:layout_constraintTop_toBottomOf="@+id/createEncounterBtn"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

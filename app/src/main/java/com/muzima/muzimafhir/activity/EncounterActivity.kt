@@ -8,6 +8,9 @@ import com.muzima.muzimafhir.R
 import com.muzima.muzimafhir.data.AppClient
 import com.muzima.muzimafhir.data.Encounter
 import kotlinx.android.synthetic.main.activity_encounter.*
+import typeFixFolder.type.Coding_Input
+import typeFixFolder.type.Encounter_Enum_input
+import typeFixFolder.type.Encounter_Input
 
 class EncounterActivity : AppCompatActivity() {
 
@@ -15,6 +18,7 @@ class EncounterActivity : AppCompatActivity() {
     lateinit var mAdapter: EncounterViewAdapter
     lateinit var mLayoutManager: LinearLayoutManager
     lateinit var getEncounter: Button
+    lateinit var createEncounter: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +28,12 @@ class EncounterActivity : AppCompatActivity() {
         getEncounter.setOnClickListener{
             getEncounter()
         }
+
+        createEncounter = createEncounterBtn
+        createEncounter.setOnClickListener{
+            createEncounter()
+        }
+
         mLayoutManager = LinearLayoutManager(this)
         var recyclerView = recyclerview_Encounter
         mAdapter = EncounterViewAdapter(encounters)
@@ -46,6 +56,24 @@ class EncounterActivity : AppCompatActivity() {
         //mAdapter.notifyDataSetChanged()
         var appClient = AppClient()
         appClient.getEncounter("5e414ec558b312549ee0e1c0") { s: String, e: Encounter -> callbackFunc(s, e) }
+    }
+
+    private fun createEncounter(){
+        var eResourceType : Encounter_Enum_input = Encounter_Enum_input.ENCOUNTER
+        var eClass = Coding_Input
+                .builder()
+                .display("hello")
+                .build()
+
+        var eInput = Encounter_Input
+                .builder()
+                .resourceType(eResourceType)
+                .status("arrived")
+                .class_(eClass)
+                .build()
+
+        var appClient = AppClient()
+        appClient.createEncounter(eInput){s:String, e:Encounter -> callbackFunc(s,e)}
     }
 
 }
