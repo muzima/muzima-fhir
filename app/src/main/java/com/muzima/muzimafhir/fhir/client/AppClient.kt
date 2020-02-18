@@ -24,7 +24,7 @@ import java.util.*
 
 class AppClient {
     var gson: Gson = Gson()
-    private var BASE_URL = "http://45.79.198.132:3000/4_0_0/\$graphql"
+    private var BASE_URL = "http://10.0.2.2:3000/4_0_0/\$graphql"
     // Android VM's host address, use either a remote server IP
     // or local IPv4 address for integration testing.
     //private var BASE_URL = "http://45.79.198.132:3000/4_0_0/\$graphql" //GraphQL endpoint
