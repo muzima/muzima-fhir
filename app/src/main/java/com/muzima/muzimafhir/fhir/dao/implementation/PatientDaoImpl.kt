@@ -10,14 +10,16 @@ class PatientDaoImpl : PatientDao {
     private val TAG = "PatientDao"
     private val patientQuery = PatientQuery()
 
-    override suspend fun getPatient(id: String) : Patient {
+    override suspend fun getPatient(id: String): Patient {
         val patient = patientQuery.queryPatientById(id)
         Log.d(TAG, "getPatient returned patient: $patient")
         return patientQuery.queryPatientById(id)
     }
 
-    override suspend fun getPatientList() : List<Patient> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override suspend fun getPatientList(): List<Patient> {
+        val patientList = patientQuery.queryPatientList()
+        Log.d(TAG, "getPatientList returned with ${patientList.size} elements")
+        return patientList
     }
 
     override fun deletePatient(id: String, p: Patient) {

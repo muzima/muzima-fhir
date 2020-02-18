@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.muzima.muzimafhir.activity.ResourceListEntry
+import com.muzima.muzimafhir.data.fhir.Patient
 import com.muzima.muzimafhir.data.fhir.Person
 import com.muzima.muzimafhir.fhir.dao.ObservationDao
 import com.muzima.muzimafhir.fhir.dao.PatientDao
@@ -39,6 +40,7 @@ class DisplayResourcesViewModel : ViewModel() {
         observationDao = ObservationDaoImpl()
         getPersonList()
         getPerson()
+        getPatientList()
         Log.d(TAG, "viewModel created")
     }
 
@@ -82,6 +84,34 @@ class DisplayResourcesViewModel : ViewModel() {
      */
     private fun getPatient() = GlobalScope.launch {
         patientDao.getPatient("5e2eb69b21c7a2122726889f")
+    }
+
+    /**
+     *  Get a list of patients by launching a coroutine within the scope of the application's lifespan
+     *  Maps the result of the operation to the entries dataset.
+     */
+    private fun getPatientList() = GlobalScope.launch {
+        Log.d(TAG, "getPatientList called")
+        val patients = patientDao.getPatientList()
+        val patientEntries = patientMapToResourceEntry(patients)
+        Log.d(TAG, "getPatientList returned ${patientEntries.size} items")
+        entries.postValue(patientEntries)
+    }
+
+    /**
+     * Maps a list of patients to a list of entries.
+     * NB: Likely doesn't behave as expected due to all the nullable fields in a patient object.
+     */
+    private fun patientMapToResourceEntry(patients: List<Patient>): MutableList<ResourceListEntry> {
+        val entries = mutableListOf<ResourceListEntry>()
+        patients.forEach { patient ->
+            val patientMap = patient.mGetFieldsAndValues()
+            val title = "Patient Instance"
+            val entry = ResourceListEntry(title, patientMap.keys.toList(),
+                    patientMap.values.toList() as List<String>)
+            entries.add(entry)
+        }
+        return entries
     }
 
     /**

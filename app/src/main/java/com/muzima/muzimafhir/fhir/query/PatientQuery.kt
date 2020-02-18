@@ -9,6 +9,7 @@ import com.muzima.muzimafhir.data.fhir.types.Address
 import com.muzima.muzimafhir.data.fhir.types.HumanName
 import com.muzima.muzimafhir.fhir.client.ApplicationGraphQLClient
 import typeFixFolder.GetPatientByIdQuery
+import typeFixFolder.GetPatientListQuery
 import java.time.Instant
 import java.util.*
 import kotlin.coroutines.resume
@@ -66,8 +67,90 @@ class PatientQuery {
         }
     }
 
-    fun queryPatientList(){
+    suspend fun queryPatientList(): MutableList<Patient> {
+        var q = GetPatientListQuery
+                .builder()
+                .build()
+        Log.d(TAG, "queryPatientList query built")
+        return suspendCoroutine { continuation ->
+            client.query(q).enqueue(
+                    object : ApolloCall.Callback<GetPatientListQuery.Data>() {
+                        override fun onResponse(response: Response<GetPatientListQuery.Data>) {
+                            Log.d(TAG, "query response received")
+                            var patientList = mutableListOf<Patient>()
 
+                            if(response.data() != null){
+                                Log.d(TAG, "raw list response: ${response.data().toString()}")
+                                if(response.data()!!.PatientList() != null){
+                                    if(response.data()!!.PatientList()!!.entry() != null){
+                                        val entries = response.data()!!.PatientList()!!.entry()
+                                        entries!!.forEach { entry ->
+                                            val p = entry.resource()?.fragments()?.patientEntry()
+                                            if(p == null){
+                                                Log.d(TAG, "the patient entry was null")
+                                            }
+
+                                            val patient = Patient()
+                                            if(p?.active() != null){
+                                                patient.active = p.active()
+                                                Log.d(TAG, "field \"active\" for a patient entry was set to ${p.active()}")
+                                            } else{
+                                                Log.d(TAG, "field \"active\" was null")
+                                            }
+                                            if(p?.gender() != null){
+                                                patient.gender = p?.gender() as String
+                                                Log.d(TAG, "field \"gender\" for a patient entry was set to ${p.gender()}")
+                                            } else {
+                                                Log.d(TAG, "field \"gender\" was null")
+                                            }
+                                            if(p?.birthDate() != null){
+                                                patient.birthDate = Date.from(Instant.parse(p.birthDate() as String))
+                                                Log.d(TAG, "field \"birthDate\" for a patient entry was set to ${p.birthDate()}")
+                                            } else {
+                                                Log.d(TAG, "field \"birthDate\" was null")
+                                            }
+                                            if (p?.name() != null) {
+                                                p.name()?.forEach { name ->
+                                                    var humanName = HumanName()
+                                                    humanName.family = name.family().toString()
+                                                    humanName.given = name.given().toString()
+                                                    Log.d(TAG, "field \"humanName.family\" for a patient entry was set to ${humanName.family}")
+                                                    patient.name?.add(humanName)
+                                                    //Log.d(TAG, "field \"humanName\" for a patient entry was set to $name")
+                                                }
+                                            } else {
+                                                Log.d(TAG, "field \"name\" was null")
+                                            }
+                                            if (p?.address() != null) {
+                                                p.address()?.forEach { a ->
+                                                    var address = Address()
+                                                    a.line()?.forEach {line ->
+                                                        address.line?.add(line)
+                                                    }
+                                                    patient.address?.add(address)
+                                                    Log.d(TAG, "field \"address.line\" for a patient entry was set to ${address.line}")
+                                                    //Log.d(TAG, "field \"address\" for a patient entry was set to $a")
+                                                }
+                                            } else {
+                                                Log.d(TAG, "field \"address\" was null")
+                                            }
+                                            patientList.add(patient)
+                                        }
+                                    } else {Log.d(TAG, "entry was null")}
+                                } else{Log.d(TAG, "PatientList was null")}
+                            } else{ Log.d(TAG, "data was null") }
+
+                            Log.d(TAG, "continuation resuming with ${patientList.size} entries")
+                            continuation.resume(patientList)
+                        }
+
+                        override fun onFailure(e: ApolloException) {
+                            Log.d(TAG, "failed with exception ${e.message}")
+                            continuation.resumeWithException(e)
+                        }
+                    }
+            )
+        }
     }
 
 }
