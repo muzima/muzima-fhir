@@ -5,12 +5,12 @@ import java.util.*
 
 data class Patient(
 
-    var identifier: MutableList<Identifier>? = null,
-    var name: MutableList<HumanName>? = null,
-    var telecom: MutableList<ContactPoint>? = null,
+    var identifier: MutableList<Identifier>? = mutableListOf(),
+    var name: MutableList<HumanName>? = mutableListOf(),
+    var telecom: MutableList<ContactPoint>? = mutableListOf(),
     var gender: String? = null,
     var birthDate: Date? = null,
-    var address: MutableList<Address>? = null,
+    var address: MutableList<Address>? = mutableListOf(),
     var photo: Attachment? = null,
     var active: Boolean? = null
 

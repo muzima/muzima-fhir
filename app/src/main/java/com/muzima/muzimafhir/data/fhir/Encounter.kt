@@ -5,9 +5,9 @@ import com.muzima.muzimafhir.data.fhir.types.Identifier
 import java.util.*
 
 data class Encounter(
-        var identifier: List<Identifier>? = null,
+        var identifier: MutableList<Identifier>? = mutableListOf(),
         var status: String? = null,
-        var type: List<CodeableConcept>? = null,
+        var type: MutableList<CodeableConcept>? = mutableListOf(),
         var serviceType: CodeableConcept? = null,
         var priority: CodeableConcept? = null,
         var subject: String? = null,
@@ -15,7 +15,7 @@ data class Encounter(
         var period: Date? = null,
         var length: String? = null,
         var reasonReference: String? = null,
-        var diagnosis: List<String>? = null,
+        var diagnosis: MutableList<String>? = mutableListOf(),
         var location: String? = null
 ){
     override fun toString(): String {

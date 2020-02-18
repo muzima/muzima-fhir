@@ -5,7 +5,7 @@ import com.muzima.muzimafhir.data.fhir.types.CodeableConcept
 import java.util.*
 
 data class Observation(
-        var identifier: MutableList<Identifier>? = null,
+        var identifier: MutableList<Identifier>? = mutableListOf(),
         var status: String? = null,
         var category: CodeableConcept? = null,
         var code: CodeableConcept? = null,

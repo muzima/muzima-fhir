@@ -36,12 +36,12 @@ class PersonQuery {
                                 data!!.Person().let { p ->
                                         Log.d(TAG, "Person() has data")
                                         person.active = p?.active()
-                                        person.gender = p?.gender() as String
+                                        person.gender = p?.gender().toString()
                                         person.birthDate = Date.from(Instant.parse(p?.birthDate() as String))
                                         if (p.name() != null) {
                                             p.name()?.forEach { name ->
                                                 var humanName = HumanName()
-                                                humanName.use = name.use() as String
+                                                humanName.use = name.use().toString()
                                                 humanName.family = name.family()
                                                 humanName.text = name.text()
                                                 person.name?.add(humanName)
@@ -100,7 +100,7 @@ class PersonQuery {
                                                 Log.d(TAG, "field \"active\" was null")
                                             }
                                             if(p?.gender() != null){
-                                                person.gender = p?.gender() as String
+                                                person.gender = p.gender().toString()
                                                 Log.d(TAG, "field \"gender\" for a person entry was set to ${p.gender()}")
                                             } else {
                                                 Log.d(TAG, "field \"gender\" was null")
