@@ -1,0 +1,15 @@
+query GetLocationById($id:token) {
+    Location(_id:$id){
+        id
+        name
+        status
+        description
+        address{
+            line
+        }
+        telecom{
+            value
+        }
+
+    }
+    }

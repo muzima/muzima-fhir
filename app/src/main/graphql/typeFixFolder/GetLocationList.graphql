@@ -1,0 +1,22 @@
+query GetLocationList {
+    LocationList {
+        entry {
+            resource {
+                ... locationEntry
+                }
+        }
+    }
+}
+
+fragment locationEntry on Location {
+    id
+    name
+    status
+    description
+    telecom{
+        value
+    }
+    address{
+        line
+    }
+}
