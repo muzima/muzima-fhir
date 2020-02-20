@@ -23,7 +23,6 @@ import kotlinx.coroutines.launch
 class DisplayResourcesViewModel : ViewModel() {
 
     // Available resource that should be visible in the activity spinner.
-    val availableResources = listOf("Person", "Patient", "Observation", "Encounter")
     val TAG = "DisplayResourcesViewModel" // Debugging tag
     private val personDao: PersonDao // DAO interface
     private val patientDao: PatientDao
@@ -38,11 +37,27 @@ class DisplayResourcesViewModel : ViewModel() {
         personDao = PersonDaoImpl()
         patientDao = PatientDaoImpl()
         observationDao = ObservationDaoImpl()
-        getPersonList()
-        getPerson()
-        getPatientList()
+        //getPersonList()
+        //getPerson()
+        //getPatientList()
         Log.d(TAG, "viewModel created")
     }
+
+    /**
+     * Replaces the viewmodel dataset with the argument dataset.
+     */
+    fun replaceDataset(mEntries: MutableList<ResourceListEntry>) = GlobalScope.launch {
+        entries.postValue(mEntries)
+    }
+
+    fun getSelectedResource(resourceName: String){
+        entries.postValue(mutableListOf())
+        when(resourceName){
+            "Person" -> getPersonList()
+            "Patient" -> getPatientList()
+        }
+    }
+
 
     /**
      *  Get a person by launching a coroutine within the scope of the application's lifespan

@@ -30,7 +30,6 @@ data class Patient(
         return mutableMapOf(
                 "nameUse1" to name?.get(0)?.use,
                 "nameFamily1" to name?.get(0)?.family,
-                "nameUse2" to name?.get(1)?.use,
                 "addressLine" to address?.get(0)?.line?.get(0).toString(),
                 "birthDate" to birthDate.toString(),
                 "gender" to gender.toString(),
