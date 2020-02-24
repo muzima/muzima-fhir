@@ -31,10 +31,10 @@ data class Person(
 
     fun mGetFieldsAndValues() : MutableMap<String, String> {
         val map =  mutableMapOf(
-                "nameUse1" to name?.get(0)?.use.toString(),
-                "nameFamily1" to name?.get(0)?.family.toString(),
-                "nameUse2" to name?.get(1)?.use.toString(),
-                "addressLine" to address?.get(0)?.line?.get(0).toString(),
+                //"nameUse1" to name?.get(0)?.use.toString(),
+                //"nameFamily1" to name?.get(0)?.family.toString(),
+                //"nameUse2" to name?.get(1)?.use.toString(),
+                //"addressLine" to address?.get(0)?.line?.get(0).toString(),
                 "birthDate" to birthDate.toString(),
                 "gender" to gender.toString(),
                 "active" to active.toString()

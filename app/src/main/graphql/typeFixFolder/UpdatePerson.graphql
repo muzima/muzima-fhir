@@ -1,0 +1,17 @@
+mutation UpdatePerson ($person: Person_Input!) {
+    PersonUpdate(resource: $person)
+    {
+        id
+        name {
+            use
+            text
+            family
+        }
+        birthDate
+        gender
+        active
+        address {
+            line
+        }
+    }
+}

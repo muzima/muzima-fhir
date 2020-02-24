@@ -44,11 +44,11 @@ class DisplayResourcesViewModel : ViewModel() {
         patientDao = PatientDaoImpl()
         observationDao = ObservationDaoImpl()
         locationDao = LocationDaoImpl()
-        getPersonList()
-        getPerson()
-        getLocationList()
-        getLocation()
-        getPatientList()
+        //getPersonList()
+        //getPerson()
+        //getLocationList()
+        //getLocation()
+        //getPatientList()
         Log.d(TAG, "viewModel created")
     }
 
@@ -206,6 +206,7 @@ class DisplayResourcesViewModel : ViewModel() {
             "Person" -> getPersonList()
             "Patient" -> getPatientList()
             "Observation" -> getObservationList()
+            "Location" -> getLocationList()
         }
     }
 

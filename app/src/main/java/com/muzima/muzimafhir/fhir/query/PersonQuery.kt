@@ -37,8 +37,10 @@ class PersonQuery {
                                         Log.d(TAG, "Person() has data")
                                         person.active = p?.active()
                                         person.gender = p?.gender().toString()
-                                        person.birthDate = Date.from(Instant.parse(p?.birthDate() as String))
-                                        if (p.name() != null) {
+                                        if (p?.birthDate() != null) {
+                                            person.birthDate = Date.from(Instant.parse(p.birthDate().toString()))
+                                        }
+                                        if (p?.name() != null) {
                                             p.name()?.forEach { name ->
                                                 var humanName = HumanName()
                                                 humanName.use = name.use().toString()
@@ -47,7 +49,7 @@ class PersonQuery {
                                                 person.name?.add(humanName)
                                             }
                                         }
-                                        if (p.address() != null) {
+                                        if (p?.address() != null) {
                                             p.address()?.forEach { a ->
                                                 var address = Address()
                                                 address.line = a.line()

@@ -37,15 +37,15 @@ class LocationQuery {
                                 Log.d(TAG, "raw response: " + data.toString())
                                 data!!.Location().let { l ->
                                     Log.d(TAG, "Location() has data")
-                                    location.name = l?.name()
-                                    location.status = l?.status() as String
-                                    location.description = l?.description()
-                                    if(l.address()?.line() != null) {
+                                    location.name = l?.name().toString()
+                                    location.status = l?.status().toString()
+                                    location.description = l?.description().toString()
+                                    if(l?.address()?.line() != null) {
                                         location.address?.line?.forEach { line ->
                                             location.address?.line = l.address()?.line()
                                         }
                                     }
-                                    if(l.telecom() != null){
+                                    if(l?.telecom() != null){
                                         l.telecom()?.forEach { t ->
                                             var contactPoint = ContactPoint()
                                             contactPoint.value = t.value()
