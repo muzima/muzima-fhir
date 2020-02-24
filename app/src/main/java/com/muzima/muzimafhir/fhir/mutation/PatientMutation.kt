@@ -26,11 +26,11 @@ class PatientMutation {
     // TODO: updatePatient()
     suspend fun createPatient(patient: Patient_Input) : PatientCreateMutation.PatientCreate? {
 
-
         var m = PatientCreateMutation
                 .builder()
                 .patient(patient)
                 .build()
+
         return suspendCoroutine { continuation ->
             client.mutate(m).enqueue(
                     object : ApolloCall.Callback<PatientCreateMutation.Data>() {
@@ -78,6 +78,4 @@ class PatientMutation {
             )
         }
     }
-
-
 }
