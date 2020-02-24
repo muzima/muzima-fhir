@@ -27,4 +27,18 @@ data class Observation(
                 "valueDateTime :" + valueDateTime.toString() + "\n"
 
     }
+
+    fun mGetFieldsAndValues() : MutableMap<String, String?> {
+        return mutableMapOf(
+                "identifier" to identifier.toString(),
+                "status" to status.toString(),
+                "category" to category.toString(),
+                "code" to code.toString(),
+                "issued" to issued.toString(),
+                "valueCodeableConcept" to valueCodeableConcept.toString(),
+                "valueString" to valueString.toString(),
+                "valueInteger" to valueInteger.toString(),
+                "valueDateTime" to valueDateTime.toString()
+        )
+    }
 }

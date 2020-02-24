@@ -16,7 +16,9 @@ class ObservationDaoImpl : ObservationDao {
     }
 
     override suspend fun getObservationList(): List<Observation> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val observationList = observationQuery.queryObservationList()
+        Log.d(TAG, "getObservationList returned with ${observationList.size} elements")
+        return observationList
     }
 
     override fun deleteObservation(id: String, o: Observation) {

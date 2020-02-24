@@ -4,5 +4,6 @@
         <item>Select a resource</item>
         <item>Person</item>
         <item>Patient</item>
+        <item>Observation</item>
     </string-array>
 </resources>

@@ -1,0 +1,27 @@
+query GetObservationList {
+    ObservationList {
+        entry {
+            resource {
+                ... observationEntry
+            }
+        }
+    }
+}
+
+fragment observationEntry on Observation {
+    id
+    status
+    code {
+        coding {
+            system
+            version
+            code
+            display
+            userSelected
+        }
+        text
+    }
+    valueString
+    valueInteger
+    valueDateTime
+}
