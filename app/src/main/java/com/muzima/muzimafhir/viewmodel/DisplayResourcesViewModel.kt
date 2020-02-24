@@ -7,6 +7,7 @@ import com.muzima.muzimafhir.activity.ResourceListEntry
 import com.muzima.muzimafhir.data.fhir.Patient
 import com.muzima.muzimafhir.data.fhir.Person
 import com.muzima.muzimafhir.data.fhir.Location
+import com.muzima.muzimafhir.data.fhir.Observation
 import com.muzima.muzimafhir.fhir.dao.ObservationDao
 import com.muzima.muzimafhir.fhir.dao.PatientDao
 import com.muzima.muzimafhir.fhir.dao.PersonDao
@@ -164,6 +165,35 @@ class DisplayResourcesViewModel : ViewModel() {
     }
 
     /**
+     *  Get a list of observations by launching a coroutine within the scope of the application's lifespan
+     *  Maps the result of the operation to the entries dataset.
+     */
+    private fun getObservationList() = GlobalScope.launch {
+        Log.d(TAG, "getObservationList called")
+        val observations = observationDao.getObservationList()
+        val observationEntries = observationMapToResourceEntry(observations)
+        Log.d(TAG, "getObservationList returned ${observationEntries.size} items")
+        entries.postValue(observationEntries)
+    }
+
+    /**
+     * Maps a list of patients to a list of entries.
+     * NB: Likely doesn't behave as expected due to all the nullable fields in a patient object.
+     */
+    private fun observationMapToResourceEntry(observations: List<Observation>): MutableList<ResourceListEntry> {
+        val entries = mutableListOf<ResourceListEntry>()
+        observations.forEach { observation ->
+            val observationMap = observation.mGetFieldsAndValues()
+            val title = "Observation Instance"
+            val entry = ResourceListEntry(title, observationMap.keys.toList(),
+                    observationMap.values.toList() as List<String>)
+            entries.add(entry)
+        }
+        return entries
+    }
+
+
+    /**
      * Replaces the viewmodel dataset with the argument dataset.
      */
     fun replaceDataset(mEntries: MutableList<ResourceListEntry>) = GlobalScope.launch {
@@ -175,6 +205,7 @@ class DisplayResourcesViewModel : ViewModel() {
         when(resourceName){
             "Person" -> getPersonList()
             "Patient" -> getPatientList()
+            "Observation" -> getObservationList()
         }
     }
 
