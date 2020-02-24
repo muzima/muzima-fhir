@@ -163,4 +163,19 @@ class DisplayResourcesViewModel : ViewModel() {
         observationDao.getObservation("5e45550f58b312549ee0e1c3")
     }
 
+    /**
+     * Replaces the viewmodel dataset with the argument dataset.
+     */
+    fun replaceDataset(mEntries: MutableList<ResourceListEntry>) = GlobalScope.launch {
+        entries.postValue(mEntries)
+    }
+
+    fun getSelectedResource(resourceName: String){
+        entries.postValue(mutableListOf())
+        when(resourceName){
+            "Person" -> getPersonList()
+            "Patient" -> getPatientList()
+        }
+    }
+
 }
