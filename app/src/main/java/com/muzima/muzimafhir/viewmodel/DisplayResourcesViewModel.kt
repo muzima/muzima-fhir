@@ -4,15 +4,17 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.muzima.muzimafhir.activity.ResourceListEntry
-import com.muzima.muzimafhir.data.fhir.Observation
 import com.muzima.muzimafhir.data.fhir.Patient
 import com.muzima.muzimafhir.data.fhir.Person
+import com.muzima.muzimafhir.data.fhir.Location
 import com.muzima.muzimafhir.fhir.dao.ObservationDao
 import com.muzima.muzimafhir.fhir.dao.PatientDao
 import com.muzima.muzimafhir.fhir.dao.PersonDao
+import com.muzima.muzimafhir.fhir.dao.LocationDao
 import com.muzima.muzimafhir.fhir.dao.implementation.ObservationDaoImpl
 import com.muzima.muzimafhir.fhir.dao.implementation.PatientDaoImpl
 import com.muzima.muzimafhir.fhir.dao.implementation.PersonDaoImpl
+import com.muzima.muzimafhir.fhir.dao.implementation.LocationDaoImpl
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -24,10 +26,12 @@ import kotlinx.coroutines.launch
 class DisplayResourcesViewModel : ViewModel() {
 
     // Available resource that should be visible in the activity spinner.
+    val availableResources = listOf("Person", "Patient", "Observation", "Encounter", "Location")
     val TAG = "DisplayResourcesViewModel" // Debugging tag
     private val personDao: PersonDao // DAO interface
     private val patientDao: PatientDao
     private val observationDao: ObservationDao
+    private val locationDao: LocationDao
 
     // LiveData lets the registered activity listen for changes in the dataset.
     // Call 'postValue' to update the dataset and notify all listeners.
@@ -38,28 +42,49 @@ class DisplayResourcesViewModel : ViewModel() {
         personDao = PersonDaoImpl()
         patientDao = PatientDaoImpl()
         observationDao = ObservationDaoImpl()
-        //getPersonList()
-        //getPerson()
-        //getPatientList()
+        locationDao = LocationDaoImpl()
+        getPersonList()
+        getPerson()
+        getLocationList()
+        getLocation()
+        getPatientList()
         Log.d(TAG, "viewModel created")
     }
 
     /**
-     * Replaces the viewmodel dataset with the argument dataset.
+     *  Get a location by launching a coroutine within the scope of the application's lifespan
      */
-    fun replaceDataset(mEntries: MutableList<ResourceListEntry>) = GlobalScope.launch {
-        entries.postValue(mEntries)
+    private fun getLocation() = GlobalScope.launch {
+        locationDao.getLocation("5e4a77cc58b312549ee0e1c9")
     }
 
-    fun getSelectedResource(resourceName: String){
-        entries.postValue(mutableListOf())
-        when(resourceName){
-            "Person" -> getPersonList()
-            "Patient" -> getPatientList()
-            "Observation" -> getObservationList()
+    /**
+     *  Get a list of people by launching a coroutine within the scope of the application's lifespan
+     *  Maps the result of the operation to the entries dataset.
+     */
+    private fun getLocationList() = GlobalScope.launch {
+        Log.d(TAG, "getLocationList called")
+        val locations = locationDao.getLocationList()
+        val locationEntries = locationMapToResourceEntry(locations)
+        Log.d(TAG, "getLocationList returned ${locationEntries.size} items")
+        entries.postValue(locationEntries)
+    }
+
+    /**
+     * Maps a list of people to a list of entries.
+     * NB: Likely doesn't behave as expected due to all the nullable fields in a location object.
+     */
+    private fun locationMapToResourceEntry(people: List<Location>): MutableList<ResourceListEntry> {
+        val entries = mutableListOf<ResourceListEntry>()
+        people.forEach { location ->
+            val locationMap = location.mGetFieldsAndValues()
+            val title = "Location Instance"
+            val entry = ResourceListEntry(title, locationMap.keys.toList(),
+                    locationMap.values.toList() as List<String>)
+            entries.add(entry)
         }
+        return entries
     }
-
 
     /**
      *  Get a person by launching a coroutine within the scope of the application's lifespan
@@ -136,34 +161,6 @@ class DisplayResourcesViewModel : ViewModel() {
      */
     private fun getObservation() = GlobalScope.launch {
         observationDao.getObservation("5e45550f58b312549ee0e1c3")
-    }
-
-    /**
-     *  Get a list of observations by launching a coroutine within the scope of the application's lifespan
-     *  Maps the result of the operation to the entries dataset.
-     */
-    private fun getObservationList() = GlobalScope.launch {
-        Log.d(TAG, "getObservationList called")
-        val observations = observationDao.getObservationList()
-        val observationEntries = observationMapToResourceEntry(observations)
-        Log.d(TAG, "getObservationList returned ${observationEntries.size} items")
-        entries.postValue(observationEntries)
-    }
-
-    /**
-     * Maps a list of patients to a list of entries.
-     * NB: Likely doesn't behave as expected due to all the nullable fields in a patient object.
-     */
-    private fun observationMapToResourceEntry(observations: List<Observation>): MutableList<ResourceListEntry> {
-        val entries = mutableListOf<ResourceListEntry>()
-        observations.forEach { observation ->
-            val observationMap = observation.mGetFieldsAndValues()
-            val title = "Observation Instance"
-            val entry = ResourceListEntry(title, observationMap.keys.toList(),
-                    observationMap.values.toList() as List<String>)
-            entries.add(entry)
-        }
-        return entries
     }
 
 }

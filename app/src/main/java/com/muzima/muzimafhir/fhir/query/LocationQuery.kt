@@ -123,6 +123,9 @@ class LocationQuery {
                                                     contactPoint.value = t.value()
                                                     location.telecom?.add(contactPoint)
                                                 }
+                                                Log.d(TAG, "field \"line\" for a telecom entry has ${l?.telecom()?.size} item(s)")
+                                            } else{
+                                                Log.d(TAG, "field \"line\" was null")
                                             }
                                             locationList.add(location)
                                         }
