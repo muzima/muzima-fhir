@@ -1,0 +1,5 @@
+mutation DeleteObservation($id:id!) {
+    ObservationRemove(id: $id) {
+        id
+    }
+}
