@@ -1,0 +1,17 @@
+mutation UpdatePatient ($patient: Patient_Input!) {
+    PatientUpdate(resource: $patient)
+    {
+        id
+        gender
+        birthDate
+        active
+        name {
+            use
+            text
+            family
+        }
+        address {
+            line
+        }
+    }
+}

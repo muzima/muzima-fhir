@@ -25,7 +25,7 @@ class PatientDaoImpl : PatientDao {
         return patientList
     }
 
-    override suspend fun deletePatient(id: String, p: Patient) {
+    override suspend fun deletePatient(id: String) {//, p: Patient) {
         var deleteReturnData = patientMutation.deletePatient(id)
         Log.d(TAG, "deletePatient with id: $id and return data ${deleteReturnData?.PatientRemove()?.id()}")
     }

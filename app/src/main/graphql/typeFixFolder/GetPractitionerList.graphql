@@ -1,0 +1,30 @@
+query GetPractitionerList {
+    PractitionerList {
+        entry {
+            resource {
+                ... practitionerEntry
+            }
+        }
+    }
+}
+
+fragment practitionerEntry on Practitioner {
+    id
+    identifier {
+        value
+    }
+    telecom {
+        value
+    }
+    name {
+        use
+        text
+        family
+    }
+    birthDate
+    gender
+    active
+    address {
+        line
+    }
+}

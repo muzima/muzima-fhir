@@ -6,6 +6,7 @@ import com.apollographql.apollo.exception.ApolloException
 import com.muzima.muzimafhir.fhir.client.ApplicationGraphQLClient
 import typeFixFolder.DeletePersonMutation
 import typeFixFolder.PersonCreateMutation
+import typeFixFolder.UpdatePersonMutation
 import typeFixFolder.type.Person_Input
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -16,7 +17,7 @@ class PersonMutation {
     val client = ApplicationGraphQLClient.getClient()
 
     // TODO: map from person model to Person_Input before calling this method
-    // TODO: updatePerson()
+
     suspend fun createPerson(person: Person_Input) : PersonCreateMutation.PersonCreate? {
 
         var m = PersonCreateMutation
@@ -71,4 +72,34 @@ class PersonMutation {
             )
         }
     }
+
+    suspend fun updatePerson(person: Person_Input) : UpdatePersonMutation.PersonUpdate? {
+
+        var m = UpdatePersonMutation
+                .builder()
+                .person(person)
+                .build()
+
+        return suspendCoroutine { continuation ->
+            client.mutate(m).enqueue(
+                    object : ApolloCall.Callback<UpdatePersonMutation.Data>() {
+                        override fun onResponse(response: Response<UpdatePersonMutation.Data>) {
+                            println("Callback onResponse called!")
+                            var dataPerson = response.data()?.PersonUpdate()
+                            //var ret = "The callback returned successfully!"
+                            println("UpdatePersonMutationResponse: " + dataPerson.toString())
+                            //println("Person as string: " + parsePerson(dataPerson).toString())
+                            // var ret = dataPerson?.name().toString()
+                            //onSuccess(ret, parsePerson(dataPerson))
+                            continuation.resume(dataPerson)
+                        }
+
+                        override fun onFailure(e: ApolloException) {
+                            continuation.resumeWithException(e)
+                        }
+                    }
+            )
+        }
+    }
+
 }

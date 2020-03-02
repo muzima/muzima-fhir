@@ -6,6 +6,7 @@ import com.apollographql.apollo.exception.ApolloException
 import com.muzima.muzimafhir.fhir.client.ApplicationGraphQLClient
 import typeFixFolder.DeleteObservationMutation
 import typeFixFolder.ObservationCreateMutation
+import typeFixFolder.UpdateObservationMutation
 import typeFixFolder.type.Observation_Input
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -71,4 +72,34 @@ class ObservationMutation {
             )
         }
     }
+
+    suspend fun updateObservation(observation: Observation_Input) : UpdateObservationMutation.ObservationUpdate? {
+
+        var m = UpdateObservationMutation
+                .builder()
+                .observation(observation)
+                .build()
+
+        return suspendCoroutine { continuation ->
+            client.mutate(m).enqueue(
+                    object : ApolloCall.Callback<UpdateObservationMutation.Data>() {
+                        override fun onResponse(response: Response<UpdateObservationMutation.Data>) {
+                            println("Callback onResponse called!")
+                            var dataObservation = response.data()?.ObservationUpdate()
+                            //var ret = "The callback returned successfully!"
+                            println("UpdateObservationMutationResponse: " + dataObservation.toString())
+                            //println("Observation as string: " + parseObservation(dataObservation).toString())
+                            // var ret = dataObservation?.name().toString()
+                            //onSuccess(ret, parseObservation(dataObservation))
+                            continuation.resume(dataObservation)
+                        }
+
+                        override fun onFailure(e: ApolloException) {
+                            continuation.resumeWithException(e)
+                        }
+                    }
+            )
+        }
+    }
+
 }

@@ -24,7 +24,7 @@ class ObservationDaoImpl : ObservationDao {
         return observationList
     }
 
-    override suspend fun deleteObservation(id: String, o: Observation) {
+    override suspend fun deleteObservation(id: String) {//, o: Observation) {
         var deleteReturnData = observationMutation.deleteObservation(id)
         Log.d(TAG, "deleteObservation with id: $id and return data ${deleteReturnData?.ObservationRemove()?.id()}")
     }

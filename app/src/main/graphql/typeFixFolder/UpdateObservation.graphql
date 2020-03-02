@@ -1,0 +1,19 @@
+mutation UpdateObservation($observation: Observation_Input!) {
+    ObservationUpdate(resource: $observation){
+        id
+        status
+        code {
+            coding {
+                system
+                version
+                code
+                display
+                userSelected
+            }
+            text
+        }
+        valueString
+        valueInteger
+        valueDateTime
+    }
+}

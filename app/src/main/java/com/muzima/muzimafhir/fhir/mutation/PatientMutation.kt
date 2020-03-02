@@ -11,6 +11,7 @@ import com.muzima.muzimafhir.fhir.client.ApplicationGraphQLClient
 import typeFixFolder.DeletePatientMutation
 import typeFixFolder.GetPatientByIdQuery
 import typeFixFolder.PatientCreateMutation
+import typeFixFolder.UpdatePatientMutation
 import typeFixFolder.type.Patient_Input
 import java.time.Instant
 import java.util.*
@@ -78,4 +79,34 @@ class PatientMutation {
             )
         }
     }
+
+    suspend fun updatePatient(patient: Patient_Input) : UpdatePatientMutation.PatientUpdate? {
+
+        var m = UpdatePatientMutation
+                .builder()
+                .patient(patient)
+                .build()
+
+        return suspendCoroutine { continuation ->
+            client.mutate(m).enqueue(
+                    object : ApolloCall.Callback<UpdatePatientMutation.Data>() {
+                        override fun onResponse(response: Response<UpdatePatientMutation.Data>) {
+                            println("Callback onResponse called!")
+                            var dataPatient = response.data()?.PatientUpdate()
+                            //var ret = "The callback returned successfully!"
+                            println("UpdatePatientMutationResponse: " + dataPatient.toString())
+                            //println("Patient as string: " + parsePatient(dataPatient).toString())
+                            // var ret = dataPatient?.name().toString()
+                            //onSuccess(ret, parsePatient(dataPatient))
+                            continuation.resume(dataPatient)
+                        }
+
+                        override fun onFailure(e: ApolloException) {
+                            continuation.resumeWithException(e)
+                        }
+                    }
+            )
+        }
+    }
+
 }

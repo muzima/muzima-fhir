@@ -1,0 +1,22 @@
+query GetPractitionerById($id:token) {
+    Practitioner(_id:$id){
+        id
+        identifier {
+            value
+        }
+        telecom {
+            value
+        }
+        name {
+            use
+            text
+            family
+        }
+        birthDate
+        gender
+        active
+        address {
+            line
+        }
+    }
+}

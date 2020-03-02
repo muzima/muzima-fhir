@@ -9,11 +9,7 @@ import com.muzima.muzimafhir.data.fhir.Person
 import com.muzima.muzimafhir.data.fhir.Location
 import com.muzima.muzimafhir.data.fhir.Encounter
 import com.muzima.muzimafhir.data.fhir.Observation
-import com.muzima.muzimafhir.fhir.dao.ObservationDao
-import com.muzima.muzimafhir.fhir.dao.PatientDao
-import com.muzima.muzimafhir.fhir.dao.PersonDao
-import com.muzima.muzimafhir.fhir.dao.LocationDao
-import com.muzima.muzimafhir.fhir.dao.EncounterDao
+import com.muzima.muzimafhir.fhir.dao.*
 import com.muzima.muzimafhir.fhir.dao.implementation.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -26,13 +22,14 @@ import kotlinx.coroutines.launch
 class DisplayResourcesViewModel : ViewModel() {
 
     // Available resource that should be visible in the activity spinner.
-    val availableResources = listOf("Person", "Patient", "Observation", "Encounter", "Location")
+    val availableResources = listOf("Person", "Patient", "Observation", "Encounter", "Location", "Practitioner")
     val TAG = "DisplayResourcesViewModel" // Debugging tag
     private val personDao: PersonDao // DAO interface
     private val patientDao: PatientDao
     private val observationDao: ObservationDao
     private val locationDao: LocationDao
     private val encounterDao: EncounterDao
+    private val practitionerDao: PractitionerDao
 
     // LiveData lets the registered activity listen for changes in the dataset.
     // Call 'postValue' to update the dataset and notify all listeners.
@@ -45,6 +42,7 @@ class DisplayResourcesViewModel : ViewModel() {
         observationDao = ObservationDaoImpl()
         locationDao = LocationDaoImpl()
         encounterDao = EncounterDaoImpl()
+        practitionerDao = PractitionerDaoImpl()
         //getPersonList()
         //getPerson()
         //getLocationList()
@@ -123,6 +121,11 @@ class DisplayResourcesViewModel : ViewModel() {
             entries.add(entry)
         }
         return entries
+    }
+
+    private fun deletePerson() = GlobalScope.launch {
+        Log.d(TAG, "deletePerson called")
+        personDao.deletePerson("5e37fb39a089755f60e968b0")
     }
 
     /**
@@ -232,7 +235,24 @@ class DisplayResourcesViewModel : ViewModel() {
         return entries
     }
 
+    /**
+     *  Get an practitioner by launching a coroutine within the scope of the application's lifespan
+     */
+    private fun getPractitioner() = GlobalScope.launch {
+        encounterDao.getEncounter("5dca8d90dc0abf364025c245")
+    }
 
+    /**
+     *  Get a list of practitioners by launching a coroutine within the scope of the application's lifespan
+     *  Maps the result of the operation to the entries dataset.
+     */
+    private fun getPractitionerList() = GlobalScope.launch {
+        Log.d(TAG, "getPractitionerList called")
+        val practitioners = practitionerDao.getPractitionerList()
+        val practitionerEntries = practitionerMapToResourceEntry(practitioners)
+        Log.d(TAG, "getPractitionerList returned ${practitionerEntries.size} items")
+        entries.postValue(practitionerEntries)
+    }
 
 
 
@@ -251,6 +271,7 @@ class DisplayResourcesViewModel : ViewModel() {
             "Observation" -> getObservationList()
             "Location" -> getLocationList()
             "Encounter" -> getEncounterList()
+
         }
     }
 

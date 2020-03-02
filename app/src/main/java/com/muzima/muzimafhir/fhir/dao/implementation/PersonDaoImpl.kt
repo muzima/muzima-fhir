@@ -25,14 +25,14 @@ class PersonDaoImpl : PersonDao {
         return personList
     }
 
-    override suspend fun deletePerson(id: String, p: Person) {
+    override suspend fun deletePerson(id: String) { //, p: Person) {
         var deleteReturnData = personMutation.deletePerson(id)
         Log.d(TAG, "deletePerson with id: $id and return data ${deleteReturnData?.PersonRemove()?.id()}")
-
     }
 
-    override suspend fun updatePerson(id: String, p: Person) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override suspend fun updatePerson(id: String, p: Person_Input) {
+        var returnData = personMutation.updatePerson(p)
+        Log.d(TAG, "updatePerson called, return data ${returnData?.id()}")
     }
 
     override suspend fun createPerson(id: String, p: Person_Input) {
