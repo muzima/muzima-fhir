@@ -6,5 +6,6 @@
         <item>Patient</item>
         <item>Observation</item>
         <item>Location</item>
+        <item>Encounter</item>
     </string-array>
 </resources>

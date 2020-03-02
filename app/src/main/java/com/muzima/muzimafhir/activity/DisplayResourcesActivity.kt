@@ -35,7 +35,7 @@ class DisplayResourcesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_display_resources)
 
-        spinnerArray = arrayOf("EMPTY", "Person", "Patient", "Observation", "Location")
+        spinnerArray = arrayOf("EMPTY", "Person", "Patient", "Observation", "Location", "Encounter")
 
         resourceSpinner = select_resource_spinner
         resourceSpinnerAdapter = ArrayAdapter<String>(this, resourceSpinner.id, spinnerArray)

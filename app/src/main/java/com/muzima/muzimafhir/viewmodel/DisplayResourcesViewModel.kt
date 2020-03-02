@@ -7,15 +7,14 @@ import com.muzima.muzimafhir.activity.ResourceListEntry
 import com.muzima.muzimafhir.data.fhir.Patient
 import com.muzima.muzimafhir.data.fhir.Person
 import com.muzima.muzimafhir.data.fhir.Location
+import com.muzima.muzimafhir.data.fhir.Encounter
 import com.muzima.muzimafhir.data.fhir.Observation
 import com.muzima.muzimafhir.fhir.dao.ObservationDao
 import com.muzima.muzimafhir.fhir.dao.PatientDao
 import com.muzima.muzimafhir.fhir.dao.PersonDao
 import com.muzima.muzimafhir.fhir.dao.LocationDao
-import com.muzima.muzimafhir.fhir.dao.implementation.ObservationDaoImpl
-import com.muzima.muzimafhir.fhir.dao.implementation.PatientDaoImpl
-import com.muzima.muzimafhir.fhir.dao.implementation.PersonDaoImpl
-import com.muzima.muzimafhir.fhir.dao.implementation.LocationDaoImpl
+import com.muzima.muzimafhir.fhir.dao.EncounterDao
+import com.muzima.muzimafhir.fhir.dao.implementation.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -33,6 +32,7 @@ class DisplayResourcesViewModel : ViewModel() {
     private val patientDao: PatientDao
     private val observationDao: ObservationDao
     private val locationDao: LocationDao
+    private val encounterDao: EncounterDao
 
     // LiveData lets the registered activity listen for changes in the dataset.
     // Call 'postValue' to update the dataset and notify all listeners.
@@ -44,11 +44,14 @@ class DisplayResourcesViewModel : ViewModel() {
         patientDao = PatientDaoImpl()
         observationDao = ObservationDaoImpl()
         locationDao = LocationDaoImpl()
+        encounterDao = EncounterDaoImpl()
         //getPersonList()
         //getPerson()
         //getLocationList()
         //getLocation()
         //getPatientList()
+        //getEncounter()
+        //getEncounterList()
         Log.d(TAG, "viewModel created")
     }
 
@@ -193,6 +196,46 @@ class DisplayResourcesViewModel : ViewModel() {
     }
 
 
+
+    /**
+     *  Get an encounter by launching a coroutine within the scope of the application's lifespan
+     */
+    private fun getEncounter() = GlobalScope.launch {
+        encounterDao.getEncounter("5e4a77cc58b312549ee0e1c9")
+    }
+
+    /**
+     *  Get a list of encounters by launching a coroutine within the scope of the application's lifespan
+     *  Maps the result of the operation to the entries dataset.
+     */
+    private fun getEncounterList() = GlobalScope.launch {
+        Log.d(TAG, "getEncounterList called")
+        val encounters = encounterDao.getEncounterList()
+        val encounterEntries = encounterMapToResourceEntry(encounters)
+        Log.d(TAG, "getEncounterList returned ${encounterEntries.size} items")
+        entries.postValue(encounterEntries)
+    }
+
+    /**
+     * Maps a list of encounters to a list of entries.
+     * NB: Likely doesn't behave as expected due to all the nullable fields in a encounter object.
+     */
+    private fun encounterMapToResourceEntry(people: List<Encounter>): MutableList<ResourceListEntry> {
+        val entries = mutableListOf<ResourceListEntry>()
+        people.forEach { encounter ->
+            val encounterMap = encounter.mGetFieldsAndValues()
+            val title = "Encounter Instance"
+            val entry = ResourceListEntry(title, encounterMap.keys.toList(),
+                    encounterMap.values.toList() as List<String>)
+            entries.add(entry)
+        }
+        return entries
+    }
+
+
+
+
+
     /**
      * Replaces the viewmodel dataset with the argument dataset.
      */
@@ -207,6 +250,7 @@ class DisplayResourcesViewModel : ViewModel() {
             "Patient" -> getPatientList()
             "Observation" -> getObservationList()
             "Location" -> getLocationList()
+            "Encounter" -> getEncounterList()
         }
     }
 

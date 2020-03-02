@@ -1,0 +1,24 @@
+query GetEncounterList {
+    EncounterList {
+        entry {
+            resource {
+                ... encounterEntry
+            }
+        }
+    }
+}
+
+fragment encounterEntry on Encounter {
+    id
+    status
+    type{
+        text
+    }
+    serviceType{
+        text
+    }
+    priority{
+        text
+    }
+
+}
