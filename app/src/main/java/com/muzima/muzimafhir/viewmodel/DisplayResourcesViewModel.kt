@@ -4,11 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.muzima.muzimafhir.activity.ResourceListEntry
-import com.muzima.muzimafhir.data.fhir.Patient
-import com.muzima.muzimafhir.data.fhir.Person
-import com.muzima.muzimafhir.data.fhir.Location
-import com.muzima.muzimafhir.data.fhir.Encounter
-import com.muzima.muzimafhir.data.fhir.Observation
+import com.muzima.muzimafhir.data.fhir.*
 import com.muzima.muzimafhir.fhir.dao.*
 import com.muzima.muzimafhir.fhir.dao.implementation.*
 import kotlinx.coroutines.GlobalScope
@@ -22,7 +18,7 @@ import kotlinx.coroutines.launch
 class DisplayResourcesViewModel : ViewModel() {
 
     // Available resource that should be visible in the activity spinner.
-    val availableResources = listOf("Person", "Patient", "Observation", "Encounter", "Location", "Practitioner")
+    val availableResources = listOf("Person", "Patient", "Observation", "Location", "Encounter", "Practitioner")
     val TAG = "DisplayResourcesViewModel" // Debugging tag
     private val personDao: PersonDao // DAO interface
     private val patientDao: PatientDao
@@ -239,7 +235,7 @@ class DisplayResourcesViewModel : ViewModel() {
      *  Get an practitioner by launching a coroutine within the scope of the application's lifespan
      */
     private fun getPractitioner() = GlobalScope.launch {
-        encounterDao.getEncounter("5dca8d90dc0abf364025c245")
+        practitionerDao.getPractitioner("5dca8d90dc0abf364025c245")
     }
 
     /**
@@ -252,6 +248,22 @@ class DisplayResourcesViewModel : ViewModel() {
         val practitionerEntries = practitionerMapToResourceEntry(practitioners)
         Log.d(TAG, "getPractitionerList returned ${practitionerEntries.size} items")
         entries.postValue(practitionerEntries)
+    }
+
+    /**
+     * Maps a list of practitioners to a list of entries.
+     * NB: Likely doesn't behave as expected due to all the nullable fields in a encounter object.
+     */
+    private fun practitionerMapToResourceEntry(people: List<Practitioner>): MutableList<ResourceListEntry> {
+        val entries = mutableListOf<ResourceListEntry>()
+        people.forEach { practitioner ->
+            val practitionerMap = practitioner.mGetFieldsAndValues()
+            val title = "Practitioner Instance"
+            val entry = ResourceListEntry(title, practitionerMap.keys.toList(),
+                    practitionerMap.values.toList() as List<String>)
+            entries.add(entry)
+        }
+        return entries
     }
 
 
@@ -271,6 +283,7 @@ class DisplayResourcesViewModel : ViewModel() {
             "Observation" -> getObservationList()
             "Location" -> getLocationList()
             "Encounter" -> getEncounterList()
+            "Practitioner" -> getPractitionerList()
 
         }
     }

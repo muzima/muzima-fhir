@@ -7,5 +7,6 @@
         <item>Observation</item>
         <item>Location</item>
         <item>Encounter</item>
+        <item>Practitioner</item>
     </string-array>
 </resources>
