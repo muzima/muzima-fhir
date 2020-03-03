@@ -1,0 +1,23 @@
+mutation PractitionerCreate($practitioner: Practitioner_Input!) {
+    PractitionerCreate(resource: $practitioner)
+    {
+        id
+        identifier {
+            value
+        }
+        telecom {
+            value
+        }
+        name {
+            use
+            text
+            family
+        }
+        birthDate
+        gender
+        active
+        address {
+            line
+        }
+    }
+}

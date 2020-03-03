@@ -1,0 +1,23 @@
+mutation UpdatePractitioner($practitioner: Practitioner_Input!) {
+    PractitionerUpdate(resource: $practitioner)
+    {
+        id
+        identifier {
+            value
+        }
+        telecom {
+            value
+        }
+        name {
+            use
+            text
+            family
+        }
+        birthDate
+        gender
+        active
+        address {
+            line
+        }
+    }
+}

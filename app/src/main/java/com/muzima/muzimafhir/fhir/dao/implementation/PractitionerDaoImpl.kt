@@ -3,13 +3,15 @@ package com.muzima.muzimafhir.fhir.dao.implementation
 import android.util.Log
 import com.muzima.muzimafhir.fhir.dao.PractitionerDao
 import com.muzima.muzimafhir.data.fhir.Practitioner
+import com.muzima.muzimafhir.fhir.mutation.PractitionerMutation
 import com.muzima.muzimafhir.fhir.query.PractitionerQuery
+import typeFixFolder.type.Practitioner_Input
 
 class PractitionerDaoImpl : PractitionerDao {
 
     private val TAG = "PractitionerDao"
     private val practitionerQuery = PractitionerQuery()
-    //private val practitionerMutation = PractitionerMutation()
+    private val practitionerMutation = PractitionerMutation()
 
     override suspend fun getPractitioner(id: String) : Practitioner {
         val practitioner = practitionerQuery.queryPractitionerById(id)
@@ -23,7 +25,7 @@ class PractitionerDaoImpl : PractitionerDao {
         return practitionerList
     }
 
-    /*
+
     override suspend fun deletePractitioner(id: String) { //, p: Practitioner) {
         var deleteReturnData = practitionerMutation.deletePractitioner(id)
         Log.d(TAG, "deletePractitioner with id: $id and return data ${deleteReturnData?.PractitionerRemove()?.id()}")
@@ -39,5 +41,5 @@ class PractitionerDaoImpl : PractitionerDao {
         Log.d(TAG, "createPractitioner called, return data ${returnData?.id()}")
 
     }
-     */
+
 }
