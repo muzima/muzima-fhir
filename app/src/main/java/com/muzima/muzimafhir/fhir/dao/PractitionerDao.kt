@@ -10,5 +10,5 @@ interface PractitionerDao {
     suspend fun getPractitionerList() : List<Practitioner>
     suspend fun deletePractitioner(id: String) //, p: Practitioner)
     suspend fun updatePractitioner(id: String, p: Practitioner_Input)
-    suspend fun createPractitioner(id: String, p: Practitioner_Input)
+    suspend fun createPractitioner(/*id: String,*/ p: Practitioner_Input)
 }

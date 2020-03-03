@@ -14,13 +14,13 @@ class Location (
     var address: Address? = null
 ) {
     val TAG = "Location"
-    fun mGetFieldsAndValues() : MutableMap<String, String?>{
+    fun mGetFieldsAndValues() : MutableMap<String, String>{
         val map = mutableMapOf(
                 "status" to status.toString(),
                 "name" to name.toString(),
                 "description" to description.toString(),
-                "telecom" to telecom?.get(0).toString(),
-                "address" to address?.toString()
+                //"telecom" to telecom.get(0).toString(),
+                "address" to address.toString()
         )
         Log.d(TAG, toString())
         Log.d(TAG, "Location converted to map: $map")

@@ -36,7 +36,7 @@ class PractitionerDaoImpl : PractitionerDao {
         Log.d(TAG, "updatePractitioner called, return data ${returnData?.id()}")
     }
 
-    override suspend fun createPractitioner(id: String, p: Practitioner_Input) {
+    override suspend fun createPractitioner(/*id: String, */p: Practitioner_Input) {
         var returnData = practitionerMutation.createPractitioner(p)
         Log.d(TAG, "createPractitioner called, return data ${returnData?.id()}")
 

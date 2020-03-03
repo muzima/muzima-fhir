@@ -9,6 +9,8 @@ import com.muzima.muzimafhir.fhir.dao.*
 import com.muzima.muzimafhir.fhir.dao.implementation.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import typeFixFolder.type.Practitioner_Enum_input
+import typeFixFolder.type.Practitioner_Input
 
 /***
  *   A class containing the data and business logic required for the view to perform its tasks.
@@ -119,6 +121,7 @@ class DisplayResourcesViewModel : ViewModel() {
         return entries
     }
 
+    // For testing only
     private fun deletePerson() = GlobalScope.launch {
         Log.d(TAG, "deletePerson called")
         personDao.deletePerson("5e37fb39a089755f60e968b0")
@@ -266,6 +269,22 @@ class DisplayResourcesViewModel : ViewModel() {
         return entries
     }
 
+    // For testing only. WORKS.
+    private fun createPractitioner() = GlobalScope.launch {
+        var p = Practitioner_Input
+                .builder()
+                .resourceType(Practitioner_Enum_input.PRACTITIONER)
+                .gender("male")
+                .active(true)
+                .build()
+
+        practitionerDao.createPractitioner(p)
+    }
+
+    // For testing only. WORKS.
+    private fun del() = GlobalScope.launch {
+        practitionerDao.deletePractitioner("5e5e271158b312549ee0e1e3")
+    }
 
 
     /**
