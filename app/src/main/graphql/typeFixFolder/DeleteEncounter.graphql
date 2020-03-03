@@ -1,0 +1,5 @@
+mutation DeleteEncounter($id:id!) {
+    EncounterRemove(id: $id) {
+        id
+    }
+}

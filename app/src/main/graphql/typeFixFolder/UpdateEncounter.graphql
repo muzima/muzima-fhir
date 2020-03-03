@@ -1,0 +1,14 @@
+mutation UpdateEncounter($encounter: Encounter_Input!){
+    EncounterUpdate(resource: $encounter)
+    {
+        id
+        status
+        class{
+            system
+            version
+            code
+            display
+            userSelected
+        }
+    }
+}
