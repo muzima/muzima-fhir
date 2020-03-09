@@ -11,6 +11,7 @@ mutation UpdatePractitioner($practitioner: Practitioner_Input!) {
         name {
             use
             text
+            given
             family
         }
         birthDate

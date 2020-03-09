@@ -12,6 +12,7 @@ fragment personEntry on Person {
     name {
         use
         text
+        given
         family
     }
     birthDate

@@ -5,6 +5,7 @@ mutation UpdatePerson ($person: Person_Input!) {
         name {
             use
             text
+            given
             family
         }
         birthDate

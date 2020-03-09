@@ -5,6 +5,8 @@ query GetPatientById($id:token) {
         birthDate
         active
         name{
+            use
+            text
             given
             family
         }

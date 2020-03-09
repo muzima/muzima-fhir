@@ -19,6 +19,7 @@ fragment practitionerEntry on Practitioner {
     name {
         use
         text
+        given
         family
     }
     birthDate

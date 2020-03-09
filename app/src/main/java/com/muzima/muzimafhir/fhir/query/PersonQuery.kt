@@ -45,7 +45,14 @@ class PersonQuery {
                                                 var humanName = HumanName()
                                                 humanName.use = name.use().toString()
                                                 humanName.family = name.family()
-                                                humanName.text = name.text()
+                                                if (name?.text() != null) {
+                                                    humanName.text = name.text().toString()
+                                                }
+                                                if (name?.given() != null) {
+                                                    name.given()?.forEach { givenName ->
+                                                        humanName.given.add(givenName)
+                                                    }
+                                                }
                                                 person.name?.add(humanName)
                                             }
                                         }
@@ -120,7 +127,14 @@ class PersonQuery {
                                                     Log.d(TAG, "field \"humanName.use\" for a person entry was set to ${humanName.use}")
                                                     humanName.family = name.family().toString()
                                                     Log.d(TAG, "field \"humanName.family\" for a person entry was set to ${humanName.family}")
-                                                    humanName.text = name.text()
+                                                    if (name?.text() != null) {
+                                                        humanName.text = name.text().toString()
+                                                    }
+                                                    if (name?.given() != null) {
+                                                        name.given()?.forEach { givenName ->
+                                                            humanName.given.add(givenName)
+                                                        }
+                                                    }
                                                     Log.d(TAG, "field \"humanName.text\" for a person entry was set to ${humanName.text}")
                                                     person.name?.add(humanName)
                                                     //Log.d(TAG, "field \"humanName\" for a person entry was set to $name")

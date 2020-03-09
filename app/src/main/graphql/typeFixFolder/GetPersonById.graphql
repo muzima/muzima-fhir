@@ -3,6 +3,7 @@ query GetPersonById($id:token) {
         name {
             use
             text
+            given
             family
         }
         birthDate

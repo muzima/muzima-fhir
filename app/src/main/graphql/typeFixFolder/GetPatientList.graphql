@@ -9,7 +9,10 @@ query GetPatientList {
 }
 
 fragment patientEntry on Patient {
+    id
     name {
+        use
+        text
         given
         family
     }

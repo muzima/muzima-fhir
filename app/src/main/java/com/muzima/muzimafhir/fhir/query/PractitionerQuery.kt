@@ -69,6 +69,11 @@ class PractitionerQuery {
                                             if (name?.text() != null) {
                                                 humanName.text = name.text().toString()
                                             }
+                                            if (name?.given() != null) {
+                                                name.given()?.forEach { givenName ->
+                                                    humanName.given.add(givenName)
+                                                }
+                                            }
                                             humanName.family = name.family()
                                             practitioner.name?.add(humanName)
                                         }
@@ -160,6 +165,11 @@ class PractitionerQuery {
                                                     var humanName = HumanName()
                                                     if (name?.text() != null) {
                                                         humanName.text = name.text().toString()
+                                                    }
+                                                    if (name?.given() != null) {
+                                                        name.given()?.forEach { givenName ->
+                                                            humanName.given.add(givenName)
+                                                        }
                                                     }
                                                     humanName.family = name.family()
                                                     practitioner.name?.add(humanName)

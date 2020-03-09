@@ -10,6 +10,7 @@ query GetPractitionerById($id:token) {
         name {
             use
             text
+            given
             family
         }
         birthDate

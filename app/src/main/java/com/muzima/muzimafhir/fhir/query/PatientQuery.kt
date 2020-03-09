@@ -41,6 +41,14 @@ class PatientQuery {
                                     if (p.name() != null) {
                                         p.name()?.forEach { name ->
                                             var humanName = HumanName()
+                                            if (name?.text() != null) {
+                                                humanName.text = name.text().toString()
+                                            }
+                                            if (name?.given() != null) {
+                                                name.given()?.forEach { givenName ->
+                                                    humanName.given.add(givenName)
+                                                }
+                                            }
                                             humanName.family = name.family()
                                             patient.name?.add(humanName)
                                         }
@@ -113,7 +121,14 @@ class PatientQuery {
                                                 p.name()?.forEach { name ->
                                                     var humanName = HumanName()
                                                     humanName.family = name.family().toString()
-                                                    humanName.given = name.given().toString()
+                                                    if (name?.text() != null) {
+                                                        humanName.text = name.text().toString()
+                                                    }
+                                                    if (name?.given() != null) {
+                                                        name.given()?.forEach { givenName ->
+                                                            humanName.given.add(givenName)
+                                                        }
+                                                    }
                                                     Log.d(TAG, "field \"humanName.family\" for a patient entry was set to ${humanName.family}")
                                                     patient.name?.add(humanName)
                                                     //Log.d(TAG, "field \"humanName\" for a patient entry was set to $name")

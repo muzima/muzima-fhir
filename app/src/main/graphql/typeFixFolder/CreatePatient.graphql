@@ -8,6 +8,7 @@ mutation PatientCreate($patient: Patient_Input!) {
         name {
             use
             text
+            given
             family
         }
         address {
