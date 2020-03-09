@@ -2,6 +2,9 @@ mutation PatientCreate($patient: Patient_Input!) {
     PatientCreate(resource: $patient)
     {
         id
+        identifier {
+            value
+        }
         gender
         birthDate
         active
@@ -14,5 +17,8 @@ mutation PatientCreate($patient: Patient_Input!) {
         address {
             line
         }
+
+        deceasedBoolean
+        deceasedDateTime
     }
 }

@@ -10,6 +10,9 @@ query GetPatientList {
 
 fragment patientEntry on Patient {
     id
+    identifier {
+        value
+    }
     name {
         use
         text
@@ -22,4 +25,7 @@ fragment patientEntry on Patient {
     address {
         line
     }
+
+    deceasedBoolean
+    deceasedDateTime
 }

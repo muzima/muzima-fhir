@@ -1,17 +1,22 @@
 query GetPatientById($id:token) {
     Patient(_id:$id){
         id
+        identifier {
+            value
+        }
         gender
         birthDate
         active
-        name{
+        name {
             use
             text
             given
             family
         }
-        address{
+        address {
             line
         }
+        deceasedBoolean
+        deceasedDateTime
     }
 }

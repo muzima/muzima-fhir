@@ -7,6 +7,7 @@ import com.apollographql.apollo.exception.ApolloException
 import com.muzima.muzimafhir.data.fhir.Patient
 import com.muzima.muzimafhir.data.fhir.types.Address
 import com.muzima.muzimafhir.data.fhir.types.HumanName
+import com.muzima.muzimafhir.data.fhir.types.Identifier
 import com.muzima.muzimafhir.fhir.client.ApplicationGraphQLClient
 import typeFixFolder.GetPatientByIdQuery
 import typeFixFolder.GetPatientListQuery
@@ -35,6 +36,16 @@ class PatientQuery {
                                 Log.d(TAG, "raw response: " + data.toString())
                                 data!!.Patient().let { p ->
                                     Log.d(TAG, "Patient() has data")
+                                    if (p?.id() != null) {
+                                        patient.id = p.id().toString()
+                                    }
+                                    if (p?.identifier() != null) {
+                                        p.identifier()?.forEach { i ->
+                                            var identifier = Identifier()
+                                            identifier.value = i.value().toString()
+                                            patient.identifier?.add(identifier)
+                                        }
+                                    }
                                     patient.active = p?.active()
                                     patient.gender = p?.gender() as String
                                     patient.birthDate = Date.from(Instant.parse(p?.birthDate() as String))
@@ -59,6 +70,12 @@ class PatientQuery {
                                             address.line = a.line()
                                             patient.address?.add(address)
                                         }
+                                    }
+                                    if (p.deceasedBoolean() != null) {
+                                        patient.deceasedBoolean = p.deceasedBoolean()
+                                    }
+                                    if (p.deceasedDateTime() != null) {
+                                        patient.deceasedDateTime = Date.from(Instant.parse(p.deceasedDateTime().toString()))
                                     }
 
                                 } ?: Log.d(TAG, "Patient was null")
@@ -99,6 +116,16 @@ class PatientQuery {
                                             }
 
                                             val patient = Patient()
+                                            if (p?.id() != null) {
+                                                patient.id = p.id().toString()
+                                            }
+                                            if (p?.identifier() != null) {
+                                                p.identifier()?.forEach { i ->
+                                                    var identifier = Identifier()
+                                                    identifier.value = i.value().toString()
+                                                    patient.identifier?.add(identifier)
+                                                }
+                                            }
                                             if(p?.active() != null){
                                                 patient.active = p.active()
                                                 Log.d(TAG, "field \"active\" for a patient entry was set to ${p.active()}")
@@ -148,6 +175,13 @@ class PatientQuery {
                                                 }
                                             } else {
                                                 Log.d(TAG, "field \"address\" was null")
+                                            }
+
+                                            if (p?.deceasedBoolean() != null) {
+                                                patient.deceasedBoolean = p.deceasedBoolean()
+                                            }
+                                            if (p?.deceasedDateTime() != null) {
+                                                patient.deceasedDateTime = Date.from(Instant.parse(p.deceasedDateTime().toString()))
                                             }
                                             patientList.add(patient)
                                         }
