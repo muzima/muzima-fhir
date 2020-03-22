@@ -67,9 +67,6 @@ class AppClient {
                 println("Callback onResponse called!")
                 var dataPerson = response.data()?.Person()
                 //var ret = "The callback returned successfully!"
-                println("person as string: " + parsePerson(dataPerson).toString())
-                var ret = dataPerson?.name().toString()
-                onSuccess(ret, parsePerson(dataPerson))
             }
             override fun onFailure(e: ApolloException) {
                 println("Callback onFailure called!")
@@ -501,48 +498,6 @@ class AppClient {
         mCoding.version = coding?.version()
         mCoding.userSelected = coding?.userSelected()
         return mCoding
-    }
-
-
-    fun parsePerson(person: GetPersonByIdQuery.Person?): Person {
-        var humanNames = mutableListOf<HumanName>()
-        var addresses = mutableListOf<Address>()
-        person?.name()?.forEach {
-            humanNames.add(parseHumanName(it))
-        }
-        person?.address()?.forEach {
-            addresses.add(parseAddress(it))
-        }
-
-
-        var mPerson = Person()
-        mPerson.name = humanNames
-        mPerson.address = addresses
-        mPerson.birthDate = parseDate(person?.birthDate() as String)
-        mPerson.gender = person?.gender().toString()
-        mPerson.active = person?.active()
-
-        return mPerson
-    }
-
-    fun parseHumanName(name: GetPersonByIdQuery.Name): HumanName {
-        var mHumanName = HumanName()
-        mHumanName.family = name.family()
-        mHumanName.use = name.use() as String
-        mHumanName.text = name.text()
-        return mHumanName
-    }
-
-    fun parseDate(date: String): Date {
-        //var d: Date = gson.fromJson(date, Date::class.java)
-        var d = Instant.parse(date)
-        return Date.from(d)
-    }
-
-    fun parseAddress(address: GetPersonByIdQuery.Address): Address {
-        var mAddress = Address()
-        mAddress.line = address.line()
-        return mAddress
     }
 
 //Patient Parse

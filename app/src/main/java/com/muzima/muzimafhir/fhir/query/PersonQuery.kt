@@ -8,6 +8,8 @@ import com.muzima.muzimafhir.data.fhir.Person
 import com.muzima.muzimafhir.data.fhir.types.Address
 import com.muzima.muzimafhir.data.fhir.types.HumanName
 import com.muzima.muzimafhir.fhir.client.ApplicationGraphQLClient
+import com.muzima.muzimafhir.fhir.fragment.AddressFragment
+import com.muzima.muzimafhir.fhir.fragment.NameFragment
 import typeFixFolder.GetPersonByIdQuery
 import typeFixFolder.GetPersonListQuery
 import java.time.Instant
@@ -42,24 +44,13 @@ class PersonQuery {
                                         }
                                         if (p?.name() != null) {
                                             p.name()?.forEach { name ->
-                                                var humanName = HumanName()
-                                                humanName.use = name.use().toString()
-                                                humanName.family = name.family()
-                                                if (name?.text() != null) {
-                                                    humanName.text = name.text().toString()
-                                                }
-                                                if (name?.given() != null) {
-                                                    name.given()?.forEach { givenName ->
-                                                        humanName.given.add(givenName)
-                                                    }
-                                                }
+                                                var humanName = NameFragment.getName(name.fragments().name())
                                                 person.name?.add(humanName)
                                             }
                                         }
                                         if (p?.address() != null) {
                                             p.address()?.forEach { a ->
-                                                var address = Address()
-                                                address.line = a.line()
+                                                var address = AddressFragment.getAddress(a.fragments().address())
                                                 person.address?.add(address)
                                             }
                                         }

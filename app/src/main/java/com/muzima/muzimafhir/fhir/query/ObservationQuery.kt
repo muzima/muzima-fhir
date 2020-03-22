@@ -118,7 +118,6 @@ class ObservationQuery {
         }
     }
 
-
     // parsers
     fun parseCode(code: GetObservationByIdQuery.Code?): CodeableConcept {
         var mCodeableConcept = CodeableConcept()

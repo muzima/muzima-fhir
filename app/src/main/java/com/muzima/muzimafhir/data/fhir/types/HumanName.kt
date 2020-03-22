@@ -5,7 +5,8 @@ data class HumanName(
     var text: String? = null,
     var family: String? = null,
     var given: MutableList<String> = mutableListOf(),
-    var prefix: String? = null,
+    var prefix: MutableList<String> = mutableListOf(),
+    var suffix: MutableList<String> = mutableListOf(),
     var period: Period? = null
 ) {
     override fun toString(): String {
