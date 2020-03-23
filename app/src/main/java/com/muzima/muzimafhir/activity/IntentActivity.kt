@@ -12,10 +12,11 @@ import com.muzima.muzimafhir.fhir.dao.implementation.PatientDaoImpl
 import com.muzima.muzimafhir.fhir.query.PatientQuery
 import kotlinx.coroutines.*
 import java.util.*
+import kotlin.coroutines.CoroutineContext
 
 class IntentActivity : AppCompatActivity() {
 
-    lateinit var patientDao: PatientDaoImpl
+    lateinit var patientDao: PatientDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,9 +31,10 @@ class IntentActivity : AppCompatActivity() {
                         && intent.getStringExtra("queryType") == "getOne") {
                     var resultIntent = Intent()
 
-                    var patient = Patient() //getPatient()
-                    patient.gender = "Apache Heli"
-                    patient.birthDate = Date(1994, 6, 20)
+                    var patient = getPatient() //getPatient()
+
+                    //patient.gender = "Apache Heli"
+                    //patient.birthDate = Date(1994, 6, 20)
 
                     var patientJson = gson.toJson(patient)
 
@@ -46,13 +48,16 @@ class IntentActivity : AppCompatActivity() {
             else -> {
             }
         }
-
     }
 
     /**
      *  Get an patient by launching a coroutine within the scope of the application's lifespan
      */
-    private fun getPatient() = GlobalScope.launch {
-        patientDao.getPatient("5e2eb69b21c7a2122726889f")
+    private fun getPatient() : Patient {
+        lateinit var patient : Patient
+        runBlocking {
+            patient = patientDao.getPatient("5e2eb69b21c7a2122726889f")
+        }
+        return patient
     }
 }
