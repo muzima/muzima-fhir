@@ -12,6 +12,16 @@ query GetObservationById($id:token) {
             }
             text
         }
+        subject {
+            ... on Patient {
+                id
+            }
+        }
+        encounter {
+            ... on Encounter {
+                id
+            }
+        }
         valueString
         valueInteger
         valueDateTime

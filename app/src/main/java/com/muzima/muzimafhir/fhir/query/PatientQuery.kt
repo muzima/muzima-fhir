@@ -48,7 +48,9 @@ class PatientQuery {
                                     }
                                     patient.active = p?.active()
                                     patient.gender = p?.gender() as String
-                                    patient.birthDate = Date.from(Instant.parse(p?.birthDate() as String))
+                                    if (p.birthDate() != null) {
+                                        patient.birthDate = Date.from(Instant.parse(p?.birthDate() as String))
+                                    }
                                     if (p.name() != null) {
                                         p.name()?.forEach { name ->
                                             var humanName = HumanName()
