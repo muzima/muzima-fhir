@@ -16,48 +16,63 @@ import kotlin.coroutines.CoroutineContext
 
 class IntentActivity : AppCompatActivity() {
 
-    lateinit var patientDao: PatientDao
+    private lateinit var patientDao: PatientDao
+    private lateinit var gson: Gson
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intent)
-        var gson = Gson()
+        gson = Gson()
 
         patientDao = PatientDaoImpl()
 
-        when {
-            intent?.action == "com.muzima.muzimafhir.ACTION_REQUEST_RESOURCE" -> {
-                if (intent.getStringExtra("resourceType") == "patient"
-                        && intent.getStringExtra("queryType") == "getOne") {
-                    var resultIntent = Intent()
+        // Get a single patient or patient list
+        if (intent?.action == "com.muzima.muzimafhir.ACTION_REQUEST_RESOURCE") {
+            if (intent.getStringExtra("resourceType") == "patient"
+                    && intent.getStringExtra("queryType") == "getOne") {
 
-                    var patient = getPatient() //getPatient()
-
-                    //patient.gender = "Apache Heli"
-                    //patient.birthDate = Date(1994, 6, 20)
-
-                    var patientJson = gson.toJson(patient)
-
-                    resultIntent.putExtra("resource", patientJson)
-                    resultIntent.putExtra("queryType", "getOne")
-                    resultIntent.putExtra("resourceType", "patient")
-                    setResult(RESULT_OK, resultIntent)
-                    finish()
-                }
+                var id = intent.getStringExtra("id")
+                var resultIntent = getPatientWithIntent(id)
+                setResult(RESULT_OK, resultIntent)
+                finish()
             }
-            else -> {
+            if (intent.getStringExtra("resourceType") == "patient"
+                    && intent.getStringExtra("queryType") == "getAll") {
+
+                var resultIntent = getPatientListWithIntent()
+                setResult(RESULT_OK, resultIntent)
+                finish()
             }
         }
     }
 
-    /**
-     *  Get an patient by launching a coroutine within the scope of the application's lifespan
-     */
-    private fun getPatient() : Patient {
-        lateinit var patient : Patient
+    private fun getPatientWithIntent(id: String): Intent {
+        lateinit var patient: Patient
+        var resultIntent = Intent()
+
         runBlocking {
-            patient = patientDao.getPatient("5e2eb69b21c7a2122726889f")
+            patient = patientDao.getPatient(id)
         }
-        return patient
+        var patientJson = gson.toJson(patient)
+
+        resultIntent.putExtra("resource", patientJson)
+        resultIntent.putExtra("queryType", "getOne")
+        resultIntent.putExtra("resourceType", "patient")
+        return resultIntent
+    }
+
+    private fun getPatientListWithIntent(): Intent {
+        lateinit var patientList: List<Patient>
+        var resultIntent = Intent()
+
+        runBlocking {
+            patientList = patientDao.getPatientList()
+        }
+        var patientListJson = gson.toJson(patientList)
+
+        resultIntent.putExtra("resource", patientListJson)
+        resultIntent.putExtra("queryType", "getAll")
+        resultIntent.putExtra("resourceType", "patient")
+        return resultIntent
     }
 }
