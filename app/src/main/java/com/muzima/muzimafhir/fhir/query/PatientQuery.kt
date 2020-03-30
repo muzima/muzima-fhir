@@ -47,10 +47,12 @@ class PatientQuery {
                                         }
                                     }
                                     patient.active = p?.active()
-                                    patient.gender = p?.gender() as String
-                                    patient.birthDate = Date.from(Instant.parse(p?.birthDate() as String))
-                                    if (p.name() != null) {
-                                        p.name()?.forEach { name ->
+                                    patient.gender = p?.gender().toString()
+                                    if (p?.birthDate() != null) {
+                                        patient.birthDate = Date.from(Instant.parse(p?.birthDate() as String))
+                                    }
+                                    if (p?.name() != null) {
+                                        p?.name()?.forEach { name ->
                                             var humanName = HumanName()
                                             if (name?.text() != null) {
                                                 humanName.text = name.text().toString()
@@ -64,17 +66,17 @@ class PatientQuery {
                                             patient.name?.add(humanName)
                                         }
                                     }
-                                    if (p.address() != null) {
-                                        p.address()?.forEach { a ->
+                                    if (p?.address() != null) {
+                                        p?.address()?.forEach { a ->
                                             var address = Address()
                                             address.line = a.line()
                                             patient.address?.add(address)
                                         }
                                     }
-                                    if (p.deceasedBoolean() != null) {
+                                    if (p?.deceasedBoolean() != null) {
                                         patient.deceasedBoolean = p.deceasedBoolean()
                                     }
-                                    if (p.deceasedDateTime() != null) {
+                                    if (p?.deceasedDateTime() != null) {
                                         patient.deceasedDateTime = Date.from(Instant.parse(p.deceasedDateTime().toString()))
                                     }
 
