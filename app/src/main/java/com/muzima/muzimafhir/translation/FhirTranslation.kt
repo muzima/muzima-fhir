@@ -45,6 +45,7 @@ class FhirTranslation {
                 address.line[0] -> address.address1
                 address.city -> address.cityVillage
             */
+            mPatient.uuid = p.id
             var addresses = mutableListOf<PersonAddress>()
             p.address?.forEach {fAddress ->
                 var mAddress = PersonAddress()

@@ -16,9 +16,18 @@ import java.util.List;
 
 public class Patient extends Person {
 
+    private String uuid;
     private List<PatientIdentifier> identifiers;
     private Tag[] tags;
     private String deletionStatus;
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
     public void addIdentifier(final PatientIdentifier identifier) {
         getIdentifiers().add(identifier);
