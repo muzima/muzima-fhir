@@ -25,5 +25,15 @@ query GetObservationById($id:token) {
         valueString
         valueInteger
         valueDateTime
+        valueCodeableConcept {
+            coding {
+                system
+                version
+                code
+                display
+                userSelected
+            }
+            text
+        }
     }
 }

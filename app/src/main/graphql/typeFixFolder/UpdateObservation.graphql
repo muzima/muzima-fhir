@@ -1,19 +1,39 @@
 mutation UpdateObservation($observation: Observation_Input!) {
     ObservationUpdate(resource: $observation){
-        id
-        status
-        code {
-            coding {
-                system
-                version
-                code
-                display
-                userSelected
-            }
-            text
-        }
-        valueString
-        valueInteger
-        valueDateTime
+                id
+                status
+                code {
+                    coding {
+                        system
+                        version
+                        code
+                        display
+                        userSelected
+                    }
+                    text
+                }
+                subject {
+                    ... on Patient {
+                        id
+                    }
+                }
+                encounter {
+                    ... on Encounter {
+                        id
+                    }
+                }
+                valueString
+                valueInteger
+                valueDateTime
+                valueCodeableConcept {
+                    coding {
+                        system
+                        version
+                        code
+                        display
+                        userSelected
+                    }
+                    text
+                }
     }
 }

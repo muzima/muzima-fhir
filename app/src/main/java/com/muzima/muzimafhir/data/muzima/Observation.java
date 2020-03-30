@@ -14,6 +14,8 @@ import java.util.Date;
 
 public class Observation {
 
+    private String uuid;
+
     private Person person;
 
     private Encounter encounter;
@@ -31,6 +33,14 @@ public class Observation {
     private Date observationDatetime;
 
     private boolean voided;
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
     public Person getPerson() {
         return person;

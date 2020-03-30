@@ -107,13 +107,77 @@ class FhirTranslation {
             val a = muzimaEncounter()
 
         }
+        */
 
         private fun fhirObservationToMuzimaObservation(o: fhirObservation) : muzimaObservation {
-            val a = muzimaObservation()
+            val mObservation = muzimaObservation()
 
+            mObservation.uuid = o.id
+
+            // Patient (FHIR) -> Person (Muzima)
+            var fp : fhirPatient? = o.subject
+            var mp = muzimaPerson()
+            var names = mutableListOf<PersonName>()
+            fp?.name?.forEach { fName ->
+                var mName = PersonName()
+                mName.familyName = fName.family
+                mName.isPreferred = fName.use == "usual"
+                mName.givenName = fName.given.joinToString(" ")
+                mName.middleName = fName.family
+                names.add(mName)
+            }
+            mp.names = names
+
+            //Addresses
+            var addresses = mutableListOf<PersonAddress>()
+            fp?.address?.forEach {fAddress ->
+                var mAddress = PersonAddress()
+                mAddress.isPreferred = fAddress.use == "usual"
+                mAddress.country = fAddress.country
+                mAddress.postalCode = fAddress.postalCode
+                mAddress.address1 = fAddress.line?.get(0)
+                mAddress.cityVillage = fAddress.city
+                /*mAddress.address2 = fAddress.line?.get(1)
+                mAddress.address3 = fAddress.line?.get(2)
+                mAddress.address4 = fAddress.line?.get(3)
+                mAddress.address5 = fAddress.line?.get(4)
+                mAddress.address6 = fAddress.line?.get(5)*/
+                mAddress.stateProvince = fAddress.state
+                addresses.add(mAddress)
+            }
+            mp.addresses = addresses
+            mp.birthdate = fp?.birthDate
+            mp.gender = fp?.gender
+            mp.isVoided = !fp?.active!!
+
+            var personAttribute = PersonAttribute()
+            var personAttributeType = PersonAttributeType()
+            personAttributeType.name = "phone"
+            personAttribute.attributeType = personAttributeType
+            personAttribute.attribute = fp.telecom?.get(0)?.value
+            mp.atributes.add(personAttribute)
+
+            mObservation.person = mp
+
+            // Encounter (FHIR) -> Encounter (Muzima)
+            var fEncounter : fhirEncounter? = o.encounter
+            var mEncounter = muzimaEncounter()
+            // TODO: continue once Encounter is mapped
+
+            // TODO: concept = code
+
+            mObservation.valueText = o.valueString
+            mObservation.valueNumeric = o.valueInteger?.toDouble()
+            mObservation.valueDatetime = o.valueDateTime
+            // TODO: valueCoded = valueCodeableConcept
+
+            mObservation.observationDatetime = o.issued
+
+            // TODO: voided
+
+            return mObservation
         }
 
-        */
 
         private fun fhirPersonToMuzimaPerson(p: fhirPerson) : muzimaPerson {
             var a = muzimaPerson()

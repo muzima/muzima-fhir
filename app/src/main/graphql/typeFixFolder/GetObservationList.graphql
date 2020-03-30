@@ -21,7 +21,27 @@ fragment observationEntry on Observation {
         }
         text
     }
+    subject {
+        ... on Patient {
+            id
+        }
+    }
+    encounter {
+        ... on Encounter {
+            id
+        }
+    }
     valueString
     valueInteger
     valueDateTime
+    valueCodeableConcept {
+        coding {
+            system
+            version
+            code
+            display
+            userSelected
+        }
+        text
+    }
 }
