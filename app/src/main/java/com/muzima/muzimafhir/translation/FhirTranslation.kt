@@ -25,7 +25,7 @@ class FhirTranslation {
             throw IllegalArgumentException("Valid argument required")
         }
 
-        /*
+
         private fun fhirLocationToMuzimaLocation(l: fhirLocation) : muzimaLocation {
             var a = muzimaLocation()
             a.name = l.name
@@ -34,10 +34,74 @@ class FhirTranslation {
             return a
         }
 
-        private fun fhirPatientToMuzimaPatient(p: fhirPatient) : muzimaPatient {
 
+        private fun fhirPatientToMuzimaPatient(p: fhirPatient) : muzimaPatient {
+            var mPatient = muzimaPatient()
+            // FHIR -> OpenMRS
+            /*List: Patient.address -> List: Patient.address
+                address.use == preferred -> address.isPreferred
+                address.country -> address.country
+                address.postalCode -> address.postalCode
+                address.line[0] -> address.address1
+                address.city -> address.cityVillage
+            */
+            var addresses = mutableListOf<PersonAddress>()
+            p.address?.forEach {fAddress ->
+                var mAddress = PersonAddress()
+                mAddress.isPreferred = fAddress.use == "usual"
+                mAddress.country = fAddress.country
+                mAddress.postalCode = fAddress.postalCode
+                mAddress.address1 = fAddress.line?.get(0)
+                mAddress.cityVillage = fAddress.city
+                /*
+                mAddress.address2 = fAddress.line?.get(1)
+                mAddress.address3 = fAddress.line?.get(2)
+                mAddress.address4 = fAddress.line?.get(3)
+                mAddress.address5 = fAddress.line?.get(4)
+                mAddress.address6 = fAddress.line?.get(5)
+                */
+                mAddress.stateProvince = fAddress.state
+                addresses.add(mAddress)
+            }
+            mPatient.addresses = addresses
+            //Address END
+            // patient.gender -> patient.gender
+            mPatient.gender = p.gender
+            // patient.birthdate -> patient.birthdate
+            mPatient.birthdate = p.birthDate
+            /* List: Patient.names -> Patient.names
+                name.family -> name.familyName
+                name.use == preferred -> name.isPreferred
+                (List) name.given (concatenated) -> name.givenName
+             */
+            var names = mutableListOf<PersonName>()
+            p.name?.forEach { fName ->
+                var mName = PersonName()
+                mName.familyName = fName.family
+                mName.isPreferred = fName.use == "usual"
+                mName.givenName = fName.given.joinToString(" ")
+                names.add(mName)
+            }
+            mPatient.names = names
+            //Names END
+            /*  List: Patient.identifier -> Patient.identifiers
+                  identifier.value -> PatientIdentifer.identifier
+             */
+            var patientIdentifiers = mutableListOf<PatientIdentifier>()
+            p.identifier?.forEach { identifier ->
+                var patientIdentifier = PatientIdentifier()
+                patientIdentifier.identifier = identifier.value
+                patientIdentifiers.add(patientIdentifier)
+            }
+            mPatient.identifiers = patientIdentifiers
+            // not patient.active -> patient.isVoided
+            mPatient.isVoided = !p.active!!
+
+            //Missing mappings: uuid, deathDate/dead,
+            return mPatient
         }
 
+        /*
         private fun fhirEncounterToMuzimaEncounter(e: fhirEncounter) : muzimaEncounter {
             val a = muzimaEncounter()
 
