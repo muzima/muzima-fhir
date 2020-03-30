@@ -1,0 +1,14 @@
+
+
+fragment address on Address {
+    city
+    country
+    line
+    state
+    postalCode
+    use
+    period {
+        start
+        end
+    }
+}

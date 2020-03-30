@@ -1,16 +1,18 @@
 query GetPersonById($id:token) {
     Person(_id:$id){
         name {
-            use
-            text
-            given
-            family
+            ...name
         }
         birthDate
         gender
         active
         address {
-            line
+            ...address
+        }
+        extension {
+            url
+            valueBoolean
+            valueDecimal
         }
     }
 }

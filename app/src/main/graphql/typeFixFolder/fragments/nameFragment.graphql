@@ -1,0 +1,14 @@
+
+
+fragment name on HumanName {
+    family
+    given
+    prefix
+    suffix
+    use
+    period {
+        start
+        end
+    }
+
+}

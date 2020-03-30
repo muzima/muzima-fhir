@@ -3,12 +3,16 @@ package com.muzima.muzimafhir.viewmodel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonObject
 import com.muzima.muzimafhir.activity.ResourceListEntry
 import com.muzima.muzimafhir.data.fhir.*
 import com.muzima.muzimafhir.fhir.dao.*
 import com.muzima.muzimafhir.fhir.dao.implementation.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import typeFixFolder.type.Practitioner_Enum_input
 import typeFixFolder.type.Practitioner_Input
 
@@ -18,6 +22,8 @@ import typeFixFolder.type.Practitioner_Input
  *   and lifecycle events. Do not reference this class from within a lifecycle event.
  */
 class DisplayResourcesViewModel : ViewModel() {
+
+    var gson = Gson();
 
     // Available resource that should be visible in the activity spinner.
     val availableResources = listOf("Person", "Patient", "Observation", "Location", "Encounter", "Practitioner")
@@ -198,7 +204,6 @@ class DisplayResourcesViewModel : ViewModel() {
     }
 
 
-
     /**
      *  Get an encounter by launching a coroutine within the scope of the application's lifespan
      */
@@ -216,6 +221,12 @@ class DisplayResourcesViewModel : ViewModel() {
         val encounterEntries = encounterMapToResourceEntry(encounters)
         Log.d(TAG, "getEncounterList returned ${encounterEntries.size} items")
         entries.postValue(encounterEntries)
+    }
+
+    private fun objectToFormattedJson(o: Object) : String {
+        var jsonString = gson.toJson(o)
+        var jsonObject = JSONObject(jsonString)
+        return jsonObject.toString(4)
     }
 
     /**
@@ -294,9 +305,40 @@ class DisplayResourcesViewModel : ViewModel() {
         entries.postValue(mEntries)
     }
 
-    fun getSelectedResource(resourceName: String){
+    fun formatString(text: String): String? {
+        val json = StringBuilder()
+        var indentString = ""
+        for (element in text) {
+            when (element) {
+                '{', '[' -> {
+                    json.append("""
+    
+    $indentString$element
+    
+    """.trimIndent())
+                    indentString += "\t"
+                    json.append(indentString)
+                }
+                '}', ']' -> {
+                    indentString = indentString.replaceFirst("\t".toRegex(), "")
+                    json.append("""
+    
+    $indentString$element
+    """.trimIndent())
+                }
+                ',' -> json.append("""
+    $element
+    $indentString
+    """.trimIndent())
+                else -> json.append(element)
+            }
+        }
+        return json.toString()
+    }
+
+    fun getSelectedResource(resourceName: String) {
         entries.postValue(mutableListOf())
-        when(resourceName){
+        when (resourceName) {
             "Person" -> getPersonList()
             "Patient" -> getPatientList()
             "Observation" -> getObservationList()
