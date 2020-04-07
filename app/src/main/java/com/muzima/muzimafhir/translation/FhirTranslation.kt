@@ -22,6 +22,9 @@ class FhirTranslation {
             if(fhirObject is fhirLocation){
                 //return fhirLocationToMuzimaLocation(fhirObject)
             }
+            if(fhirObject is fhirPatient){
+                return fhirPatientToMuzimaPatient(fhirObject)
+            }
             throw IllegalArgumentException("Valid argument required")
         }
 
@@ -29,8 +32,6 @@ class FhirTranslation {
         private fun fhirLocationToMuzimaLocation(l: fhirLocation) : muzimaLocation {
             var a = muzimaLocation()
             a.name = l.name
-
-
             return a
         }
 
@@ -45,7 +46,6 @@ class FhirTranslation {
                 address.line[0] -> address.address1
                 address.city -> address.cityVillage
             */
-            mPatient.uuid = p.id
             var addresses = mutableListOf<PersonAddress>()
             p.address?.forEach {fAddress ->
                 var mAddress = PersonAddress()
@@ -54,13 +54,6 @@ class FhirTranslation {
                 mAddress.postalCode = fAddress.postalCode
                 mAddress.address1 = fAddress.line?.get(0)
                 mAddress.cityVillage = fAddress.city
-                /*
-                mAddress.address2 = fAddress.line?.get(1)
-                mAddress.address3 = fAddress.line?.get(2)
-                mAddress.address4 = fAddress.line?.get(3)
-                mAddress.address5 = fAddress.line?.get(4)
-                mAddress.address6 = fAddress.line?.get(5)
-                */
                 mAddress.stateProvince = fAddress.state
                 addresses.add(mAddress)
             }
@@ -98,7 +91,17 @@ class FhirTranslation {
             // not patient.active -> patient.isVoided
             mPatient.isVoided = !p.active!!
 
-            //Missing mappings: uuid, deathDate/dead,
+            // Patient.telecom -> List: Patient.attribute.phone
+            var personAttribute = PersonAttribute()
+            var personAttributeType = PersonAttributeType()
+            personAttributeType.name = "phone"
+            personAttribute.attributeType = personAttributeType
+            personAttribute.attribute = p.telecom?.get(0)?.value
+            mPatient.atributes.add(personAttribute)
+
+            // Patient.id -> Patient.uuid
+            mPatient.uuid = p.id
+
             return mPatient
         }
 
@@ -181,6 +184,10 @@ class FhirTranslation {
 
         private fun fhirPersonToMuzimaPerson(p: fhirPerson) : muzimaPerson {
             var a = muzimaPerson()
+
+            // id -> uuid
+            a.uuid = p.id
+
             //Names
             var names = mutableListOf<PersonName>()
             p.name?.forEach { fName ->

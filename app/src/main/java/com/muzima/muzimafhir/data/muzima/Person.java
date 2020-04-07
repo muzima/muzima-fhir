@@ -22,7 +22,7 @@ public class Person {
     public static final String DISPLAY_NAME_FOR_ENCOUNTER_FOR_OBSERVATIONS_WITH_NULL_UUID = "";
 
     private String gender;
-
+    private String uuid;
     private Date birthdate;
     private boolean birthdateEstimated;
 
@@ -155,5 +155,13 @@ public class Person {
 
     public void setVoided(final boolean voided) {
         this.voided = voided;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }
