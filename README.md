@@ -66,7 +66,7 @@ suspend fun queryPatientById(id: String): Patient {
 
 The `schema.json` file conained within the `graphqlcontent` folder defines the schema which Apollo performs code generation and type checking against. Due to its size, code inspection is disabled by default but can be enabled by editing the max file size property if using IntelliJ or Android Studio:
 ```
-idea.max.intellisense.filesize=2500
+idea.max.intellisense.filesize=999999
 ```
 
 Resource translation is handled by `FhirTranslation.kt` and `MuzimaTranslation.kt`, and defined the mapping between the Fhir resources and Muzima entities.
