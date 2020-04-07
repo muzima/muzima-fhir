@@ -7,7 +7,7 @@ The project is powered by Apollo GraphQL for supporting GraphQL functionality.
 
 # Creating queries
 
-GraphQL qureries are defined within the `graphqlcontent` folder. A GraphQL query carries the file extension `.graphql`, and are defined like regular GraphQL queries:
+GraphQL queries are defined within the `graphqlcontent` folder. A GraphQL query carries the file extension `.graphql`, and are defined like regular GraphQL queries:
 
 ```
 query GetPatientById($id:token) {
@@ -63,3 +63,10 @@ suspend fun queryPatientById(id: String): Patient {
         }
     }
 ```
+
+The `schema.json` file conained within the `graphqlcontent` folder defines the schema which Apollo performs code generation and type checking against. Due to its size, code inspection is disabled by default but can be enabled by editing the max file size property if using IntelliJ or Android Studio:
+```
+idea.max.intellisense.filesize=2500
+```
+
+Resource translation is handled by `FhirTranslation.kt` and `MuzimaTranslation.kt`, and defined the mapping between the Fhir resources and Muzima entities.
