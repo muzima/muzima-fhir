@@ -4,7 +4,7 @@ import com.muzima.muzimafhir.data.fhir.types.*
 import java.util.*
 
 data class Patient(
-        var id: String? = null,
+        var id: String = "",
         var identifier: MutableList<Identifier>? = mutableListOf(),
         var name: MutableList<HumanName>? = mutableListOf(),
         var telecom: MutableList<ContactPoint>? = mutableListOf(),

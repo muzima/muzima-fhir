@@ -9,8 +9,8 @@ import com.muzima.muzimafhir.data.fhir.types.Address
 import com.muzima.muzimafhir.data.fhir.types.ContactPoint
 import com.muzima.muzimafhir.data.fhir.types.HumanName
 import com.muzima.muzimafhir.fhir.client.ApplicationGraphQLClient
-import typeFixFolder.GetLocationByIdQuery
-import typeFixFolder.GetLocationListQuery
+import graphqlcontent.GetLocationByIdQuery
+import graphqlcontent.GetLocationListQuery
 import java.time.Instant
 import java.util.*
 import kotlin.coroutines.resume

@@ -1,9 +1,9 @@
 package com.muzima.muzimafhir.fhir.dao
 
 import com.muzima.muzimafhir.data.fhir.Practitioner
-import typeFixFolder.type.Practitioner_Input
+import graphqlcontent.type.Practitioner_Input
 
-//import typeFixFolder.type.Practitioner_Input
+//import graphqlcontent.type.Practitioner_Input
 
 interface PractitionerDao {
     suspend fun getPractitioner(id: String) : Practitioner

@@ -8,9 +8,9 @@ import com.muzima.muzimafhir.R
 import com.muzima.muzimafhir.fhir.client.AppClient
 import com.muzima.muzimafhir.data.fhir.Person
 import kotlinx.android.synthetic.main.activity_person.*
-import typeFixFolder.type.HumanName_Input
-import typeFixFolder.type.Person_Enum_input
-import typeFixFolder.type.Person_Input
+import graphqlcontent.type.HumanName_Input
+import graphqlcontent.type.Person_Enum_input
+import graphqlcontent.type.Person_Input
 
 class PersonActivity : AppCompatActivity() {
 

@@ -8,9 +8,9 @@ import com.muzima.muzimafhir.data.fhir.Observation
 import com.muzima.muzimafhir.data.fhir.types.CodeableConcept
 import com.muzima.muzimafhir.data.fhir.types.Coding
 import com.muzima.muzimafhir.fhir.client.ApplicationGraphQLClient
-import typeFixFolder.GetObservationByIdQuery
-import typeFixFolder.GetObservationListQuery
-import typeFixFolder.fragment.ObservationEntry
+import graphqlcontent.GetObservationByIdQuery
+import graphqlcontent.GetObservationListQuery
+import graphqlcontent.fragment.ObservationEntry
 import java.time.Instant
 import java.util.*
 import kotlin.coroutines.resume

@@ -1,7 +1,7 @@
 package com.muzima.muzimafhir.data.fhir.types.Parsers
 
 import com.muzima.muzimafhir.data.fhir.types.Address
-import typeFixFolder.GetLocationByIdQuery
+import graphqlcontent.GetLocationByIdQuery
 
 class AddressParser {
 

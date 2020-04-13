@@ -1,5 +1,5 @@
-mutation PatientCreate($patient: Patient_Input!) {
-    PatientCreate(resource: $patient)
+mutation PatientCreate($patient: Patient_Input!, $id: id) {
+    PatientCreate(id: $id, resource: $patient)
     {
         id
         identifier {

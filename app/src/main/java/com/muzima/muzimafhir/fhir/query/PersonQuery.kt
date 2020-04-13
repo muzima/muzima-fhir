@@ -10,8 +10,8 @@ import com.muzima.muzimafhir.data.fhir.types.HumanName
 import com.muzima.muzimafhir.fhir.client.ApplicationGraphQLClient
 import com.muzima.muzimafhir.fhir.fragment.AddressFragment
 import com.muzima.muzimafhir.fhir.fragment.NameFragment
-import typeFixFolder.GetPersonByIdQuery
-import typeFixFolder.GetPersonListQuery
+import graphqlcontent.GetPersonByIdQuery
+import graphqlcontent.GetPersonListQuery
 import java.time.Instant
 import java.util.*
 import kotlin.coroutines.resume

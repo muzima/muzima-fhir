@@ -8,10 +8,10 @@ import com.muzima.muzimafhir.R
 import com.muzima.muzimafhir.fhir.client.AppClient
 import com.muzima.muzimafhir.data.fhir.Patient
 import kotlinx.android.synthetic.main.activity_patient.*
-import typeFixFolder.type.HumanName_Input
-import typeFixFolder.type.Patient_Enum_input
-import typeFixFolder.type.Patient_Input
-import typeFixFolder.type.Person_Enum_input
+import graphqlcontent.type.HumanName_Input
+import graphqlcontent.type.Patient_Enum_input
+import graphqlcontent.type.Patient_Input
+import graphqlcontent.type.Person_Enum_input
 
 class PatientActivity : AppCompatActivity() {
 

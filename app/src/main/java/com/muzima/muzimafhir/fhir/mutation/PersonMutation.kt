@@ -4,10 +4,10 @@ import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
 import com.muzima.muzimafhir.fhir.client.ApplicationGraphQLClient
-import typeFixFolder.DeletePersonMutation
-import typeFixFolder.PersonCreateMutation
-import typeFixFolder.UpdatePersonMutation
-import typeFixFolder.type.Person_Input
+import graphqlcontent.DeletePersonMutation
+import graphqlcontent.PersonCreateMutation
+import graphqlcontent.UpdatePersonMutation
+import graphqlcontent.type.Person_Input
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine

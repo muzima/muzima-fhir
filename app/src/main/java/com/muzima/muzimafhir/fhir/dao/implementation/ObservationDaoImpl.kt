@@ -5,7 +5,7 @@ import com.muzima.muzimafhir.data.fhir.Observation
 import com.muzima.muzimafhir.fhir.dao.ObservationDao
 import com.muzima.muzimafhir.fhir.mutation.ObservationMutation
 import com.muzima.muzimafhir.fhir.query.ObservationQuery
-import typeFixFolder.type.Observation_Input
+import graphqlcontent.type.Observation_Input
 
 class ObservationDaoImpl : ObservationDao {
     private val TAG = "ObservationDao"

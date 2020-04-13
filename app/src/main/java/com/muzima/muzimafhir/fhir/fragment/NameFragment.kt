@@ -11,7 +11,7 @@ class NameFragment {
          * @param a FHIR Name fragment
          * @return a FHIR Name object
          */
-        fun getName(name: typeFixFolder.fragment.Name) : HumanName {
+        fun getName(name: graphqlcontent.fragment.Name) : HumanName {
             var newName = HumanName()
             if(name.family() != null){
                 newName.family = name.family()

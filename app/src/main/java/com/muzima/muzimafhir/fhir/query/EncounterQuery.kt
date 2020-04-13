@@ -7,8 +7,8 @@ import com.apollographql.apollo.exception.ApolloException
 import com.muzima.muzimafhir.data.fhir.Encounter
 import com.muzima.muzimafhir.data.fhir.types.CodeableConcept
 import com.muzima.muzimafhir.fhir.client.ApplicationGraphQLClient
-import typeFixFolder.GetEncounterByIdQuery
-import typeFixFolder.GetEncounterListQuery
+import graphqlcontent.GetEncounterByIdQuery
+import graphqlcontent.GetEncounterListQuery
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine

@@ -10,8 +10,8 @@ import com.muzima.muzimafhir.data.fhir.types.ContactPoint
 import com.muzima.muzimafhir.data.fhir.types.HumanName
 import com.muzima.muzimafhir.data.fhir.types.Identifier
 import com.muzima.muzimafhir.fhir.client.ApplicationGraphQLClient
-import typeFixFolder.GetPractitionerByIdQuery
-import typeFixFolder.GetPractitionerListQuery
+import graphqlcontent.GetPractitionerByIdQuery
+import graphqlcontent.GetPractitionerListQuery
 import java.time.Instant
 import java.util.*
 import kotlin.coroutines.resume

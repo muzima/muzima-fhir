@@ -8,10 +8,10 @@ import com.muzima.muzimafhir.R
 import com.muzima.muzimafhir.fhir.client.AppClient
 import com.muzima.muzimafhir.data.fhir.Observation
 import kotlinx.android.synthetic.main.activity_observation.*
-import typeFixFolder.type.CodeableConcept_Input
-import typeFixFolder.type.Coding_Input
-import typeFixFolder.type.Observation_Enum_input
-import typeFixFolder.type.Observation_Input
+import graphqlcontent.type.CodeableConcept_Input
+import graphqlcontent.type.Coding_Input
+import graphqlcontent.type.Observation_Enum_input
+import graphqlcontent.type.Observation_Input
 import java.time.LocalDateTime
 import java.util.*
 

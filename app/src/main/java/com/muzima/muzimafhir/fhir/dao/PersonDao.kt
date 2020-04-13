@@ -1,7 +1,7 @@
 package com.muzima.muzimafhir.fhir.dao
 
 import com.muzima.muzimafhir.data.fhir.Person
-import typeFixFolder.type.Person_Input
+import graphqlcontent.type.Person_Input
 
 interface PersonDao {
     suspend fun getPerson(id: String) : Person

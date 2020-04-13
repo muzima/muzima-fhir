@@ -1,7 +1,7 @@
 package com.muzima.muzimafhir.fhir.dao;
 
 import com.muzima.muzimafhir.data.fhir.Observation;
-import typeFixFolder.type.Observation_Input
+import graphqlcontent.type.Observation_Input
 
 interface ObservationDao {
     suspend fun getObservation(id: String) : Observation

@@ -1,6 +1,6 @@
 package com.muzima.muzimafhir.fhir.dao
 import com.muzima.muzimafhir.data.fhir.Encounter
-import typeFixFolder.type.Encounter_Input
+import graphqlcontent.type.Encounter_Input
 
 interface EncounterDao {
 

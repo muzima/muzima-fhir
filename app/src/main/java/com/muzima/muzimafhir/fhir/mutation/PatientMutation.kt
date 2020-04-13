@@ -8,11 +8,11 @@ import com.muzima.muzimafhir.data.fhir.Patient
 import com.muzima.muzimafhir.data.fhir.types.Address
 import com.muzima.muzimafhir.data.fhir.types.HumanName
 import com.muzima.muzimafhir.fhir.client.ApplicationGraphQLClient
-import typeFixFolder.DeletePatientMutation
-import typeFixFolder.GetPatientByIdQuery
-import typeFixFolder.PatientCreateMutation
-import typeFixFolder.UpdatePatientMutation
-import typeFixFolder.type.Patient_Input
+import graphqlcontent.DeletePatientMutation
+import graphqlcontent.GetPatientByIdQuery
+import graphqlcontent.PatientCreateMutation
+import graphqlcontent.UpdatePatientMutation
+import graphqlcontent.type.Patient_Input
 import java.time.Instant
 import java.util.*
 import kotlin.coroutines.resume
@@ -25,11 +25,12 @@ class PatientMutation {
 
     // TODO: map from patient model to Patient_Input before calling this method
     // TODO: updatePatient()
-    suspend fun createPatient(patient: Patient_Input) : PatientCreateMutation.PatientCreate? {
+    suspend fun createPatient(patient: Patient_Input, id: String) : PatientCreateMutation.PatientCreate? {
 
         var m = PatientCreateMutation
                 .builder()
                 .patient(patient)
+                .id(id)
                 .build()
 
         return suspendCoroutine { continuation ->

@@ -5,7 +5,7 @@ import com.muzima.muzimafhir.data.fhir.Encounter
 import com.muzima.muzimafhir.fhir.dao.EncounterDao
 import com.muzima.muzimafhir.fhir.mutation.EncounterMutation
 import com.muzima.muzimafhir.fhir.query.EncounterQuery
-import typeFixFolder.type.Encounter_Input
+import graphqlcontent.type.Encounter_Input
 
 class EncounterDaoImpl : EncounterDao{
 

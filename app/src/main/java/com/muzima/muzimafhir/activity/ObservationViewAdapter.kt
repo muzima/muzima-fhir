@@ -31,7 +31,7 @@ class ObservationViewAdapter(private val dataset: MutableList<Observation>) :
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(holder: ObservationViewHolder, position: Int) {
-        // - get element from your dataset at this position
+        //  get element from your dataset at this position
         // - replace the contents of the view with that element
         val observation = dataset[position]
         holder.view.textView_title.text = "Observation"

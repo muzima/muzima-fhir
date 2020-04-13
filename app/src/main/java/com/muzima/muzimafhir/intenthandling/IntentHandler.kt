@@ -1,12 +1,19 @@
 package com.muzima.muzimafhir.intenthandling
 
 import android.content.Intent
+import android.util.Log
 import com.google.gson.Gson
 import com.muzima.muzimafhir.data.fhir.*
 import com.muzima.muzimafhir.fhir.dao.implementation.*
+import com.muzima.muzimafhir.translation.FhirTranslation
+import com.muzima.muzimafhir.translation.MuzimaTranslation
 import kotlinx.coroutines.runBlocking
+import com.muzima.muzimafhir.data.muzima.Patient as MuzimaPatient
+import com.muzima.muzimafhir.data.fhir.Patient as FhirPatient
 
 class IntentHandler {
+
+    val TAG = "IntentHandler"
 
     private var patientDao = PatientDaoImpl()
     private var locationDao = LocationDaoImpl()
@@ -18,7 +25,18 @@ class IntentHandler {
     var resultIntent = Intent()
 
     fun handleIntent(intent: Intent): Intent? {
-        if (intent?.action == "com.muzima.muzimafhir.ACTION_REQUEST_RESOURCE") {
+        Log.d(TAG, "received intent with action ${intent.action}")
+        if (intent.action == "com.muzima.muzimafhir.ACTION_INSERT_RESOURCE"){
+            if (intent.getStringExtra("resourceType") == "patient") {
+                if (intent.getStringExtra("resource") != null) {
+                    val jsonPatient = intent.getStringExtra("resource")
+                    MuzimaTranslation.translateAndInsert("patient", jsonPatient)
+                    return resultIntent
+                }
+            }
+        }
+
+        if (intent.action == "com.muzima.muzimafhir.ACTION_REQUEST_RESOURCE") {
             // Patient
             if (intent.getStringExtra("resourceType") == "patient") {
                 if (intent.getStringExtra("queryType") == "getOne") {
@@ -90,13 +108,15 @@ class IntentHandler {
 
     // PATIENT
     private fun getPatientWithIntent(id: String): Intent {
-        lateinit var patient: Patient
+        lateinit var patient: FhirPatient
+        lateinit var muzimaPatient: MuzimaPatient
         var resultIntent = Intent()
 
         runBlocking {
             patient = patientDao.getPatient(id)
+            muzimaPatient = FhirTranslation.toMuzimaObject(patient) as MuzimaPatient
         }
-        var patientJson = gson.toJson(patient)
+        var patientJson = gson.toJson(muzimaPatient)
 
         resultIntent.putExtra("resource", patientJson)
         resultIntent.putExtra("queryType", "getOne")
@@ -105,7 +125,7 @@ class IntentHandler {
     }
 
     private fun getPatientListWithIntent(): Intent {
-        lateinit var patientList: List<Patient>
+        lateinit var patientList: List<FhirPatient>
         var resultIntent = Intent()
 
         runBlocking {
@@ -242,5 +262,6 @@ class IntentHandler {
         resultIntent.putExtra("resourceType", "location")
         return resultIntent
     }
+
 
 }

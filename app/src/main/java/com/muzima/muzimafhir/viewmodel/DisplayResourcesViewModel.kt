@@ -13,8 +13,8 @@ import com.muzima.muzimafhir.fhir.dao.implementation.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.json.JSONObject
-import typeFixFolder.type.Practitioner_Enum_input
-import typeFixFolder.type.Practitioner_Input
+import graphqlcontent.type.Practitioner_Enum_input
+import graphqlcontent.type.Practitioner_Input
 
 /***
  *   A class containing the data and business logic required for the view to perform its tasks.

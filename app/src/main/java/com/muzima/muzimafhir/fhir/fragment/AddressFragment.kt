@@ -10,7 +10,7 @@ class AddressFragment {
          * @param a FHIR Address fragment
          * @return a FHIR Address object
          */
-        fun getAddress(address: typeFixFolder.fragment.Address) : Address {
+        fun getAddress(address: graphqlcontent.fragment.Address) : Address {
             var newAddress = Address()
             if(address.city() != null){
                 newAddress.city = address.city()

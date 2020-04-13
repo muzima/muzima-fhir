@@ -5,7 +5,7 @@ import com.muzima.muzimafhir.fhir.dao.PractitionerDao
 import com.muzima.muzimafhir.data.fhir.Practitioner
 import com.muzima.muzimafhir.fhir.mutation.PractitionerMutation
 import com.muzima.muzimafhir.fhir.query.PractitionerQuery
-import typeFixFolder.type.Practitioner_Input
+import graphqlcontent.type.Practitioner_Input
 
 class PractitionerDaoImpl : PractitionerDao {
 

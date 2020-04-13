@@ -9,8 +9,8 @@ import com.muzima.muzimafhir.data.fhir.types.Address
 import com.muzima.muzimafhir.data.fhir.types.HumanName
 import com.muzima.muzimafhir.data.fhir.types.Identifier
 import com.muzima.muzimafhir.fhir.client.ApplicationGraphQLClient
-import typeFixFolder.GetPatientByIdQuery
-import typeFixFolder.GetPatientListQuery
+import graphqlcontent.GetPatientByIdQuery
+import graphqlcontent.GetPatientListQuery
 import java.time.Instant
 import java.util.*
 import kotlin.coroutines.resume

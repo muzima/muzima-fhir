@@ -8,9 +8,9 @@ import com.muzima.muzimafhir.R
 import com.muzima.muzimafhir.fhir.client.AppClient
 import com.muzima.muzimafhir.data.fhir.Encounter
 import kotlinx.android.synthetic.main.activity_encounter.*
-import typeFixFolder.type.Coding_Input
-import typeFixFolder.type.Encounter_Enum_input
-import typeFixFolder.type.Encounter_Input
+import graphqlcontent.type.Coding_Input
+import graphqlcontent.type.Encounter_Enum_input
+import graphqlcontent.type.Encounter_Input
 
 class EncounterActivity : AppCompatActivity() {
 

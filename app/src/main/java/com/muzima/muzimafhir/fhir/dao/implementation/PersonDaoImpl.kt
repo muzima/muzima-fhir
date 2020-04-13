@@ -5,7 +5,7 @@ import com.muzima.muzimafhir.fhir.dao.PersonDao
 import com.muzima.muzimafhir.data.fhir.Person
 import com.muzima.muzimafhir.fhir.mutation.PersonMutation
 import com.muzima.muzimafhir.fhir.query.PersonQuery
-import typeFixFolder.type.Person_Input
+import graphqlcontent.type.Person_Input
 
 class PersonDaoImpl : PersonDao {
 

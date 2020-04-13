@@ -5,7 +5,7 @@ import com.muzima.muzimafhir.data.fhir.Patient
 import com.muzima.muzimafhir.fhir.dao.PatientDao
 import com.muzima.muzimafhir.fhir.mutation.PatientMutation
 import com.muzima.muzimafhir.fhir.query.PatientQuery
-import typeFixFolder.type.Patient_Input
+import graphqlcontent.type.Patient_Input
 
 class PatientDaoImpl : PatientDao {
 
@@ -34,8 +34,8 @@ class PatientDaoImpl : PatientDao {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override suspend fun createPatient(id: String, p: Patient_Input) {
-        var returnData = patientMutation.createPatient(p)
+    override suspend fun createPatient(p: Patient_Input, id: String) {
+        var returnData = patientMutation.createPatient(p, id)
         Log.d(TAG, "createPatient called, return data ${returnData?.id()}")
     }
 }
