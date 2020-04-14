@@ -58,20 +58,23 @@ class MuzimaTranslation {
             fhirPatient.birthDate = muzimaPatient.birthdate
 
             // Name
-            var fhirName = HumanName()
-            fhirName.family = muzimaPatient.names[0].familyName
-            if(muzimaPatient.names[0].isPreferred) fhirName.use = "usual"
-            var given = muzimaPatient.names[0].givenName.split(" ")
-            given.forEach{givenName ->
-                fhirName.given.add(givenName)
+            var fhirNames = mutableListOf<HumanName>()
+            muzimaPatient.names.forEach{ name ->
+                var fhirName = HumanName()
+                fhirName.family = name.familyName
+                var givenName = name.givenName.split(" ")
+                givenName.forEach{givenName ->
+                    fhirName.given.add(givenName)
+                }
+                if(name.isPreferred) fhirName.use = "usual"
+                fhirNames.add(fhirName)
             }
-
+            fhirPatient.name = fhirNames
             fhirPatient.active = !muzimaPatient.isVoided
 
             var fhirTelecom = ContactPoint()
             var muzimaAttribute = muzimaPatient.atributes.find { attribute -> attribute.attributeType.name == "phone" }
             fhirTelecom.value = muzimaAttribute?.attribute
-
             fhirPatient.id = muzimaPatient.uuid
 
             return fhirPatient

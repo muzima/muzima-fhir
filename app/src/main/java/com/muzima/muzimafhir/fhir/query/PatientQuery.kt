@@ -70,6 +70,10 @@ class PatientQuery {
                                         p?.address()?.forEach { a ->
                                             var address = Address()
                                             address.line = a.line()
+                                            address.state = a.state()
+                                            address.postalCode = a.postalCode()
+                                            address.city = a.city()
+                                            address.country = a.country()
                                             patient.address?.add(address)
                                         }
                                     }

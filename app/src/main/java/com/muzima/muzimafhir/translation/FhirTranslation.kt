@@ -1,6 +1,9 @@
 package com.muzima.muzimafhir.translation
 
 import com.muzima.muzimafhir.data.muzima.*
+import com.muzima.muzimafhir.fhir.dao.PatientDao
+import com.muzima.muzimafhir.fhir.dao.implementation.PatientDaoImpl
+import kotlinx.coroutines.runBlocking
 import com.muzima.muzimafhir.data.fhir.Person as fhirPerson
 import com.muzima.muzimafhir.data.muzima.Person as muzimaPerson
 import com.muzima.muzimafhir.data.fhir.Location as fhirLocation
@@ -15,6 +18,8 @@ import com.muzima.muzimafhir.data.muzima.Patient as muzimaPatient
 
 class FhirTranslation {
     companion object {
+        val patientDao: PatientDao = PatientDaoImpl()
+
         fun toMuzimaObject(fhirObject: Any) : Any {
             if(fhirObject is fhirPerson){
                 return fhirPersonToMuzimaPerson(fhirObject)
@@ -92,12 +97,14 @@ class FhirTranslation {
             mPatient.isVoided = !p.active!!
 
             // Patient.telecom -> List: Patient.attribute.phone
-            var personAttribute = PersonAttribute()
-            var personAttributeType = PersonAttributeType()
-            personAttributeType.name = "phone"
-            personAttribute.attributeType = personAttributeType
-            personAttribute.attribute = p.telecom?.get(0)?.value
-            mPatient.atributes.add(personAttribute)
+            if(p.telecom?.size!! > 0) {
+                var personAttribute = PersonAttribute()
+                var personAttributeType = PersonAttributeType()
+                personAttributeType.name = "phone"
+                personAttribute.attributeType = personAttributeType
+                if (p.telecom?.size!! > 0) personAttribute.attribute = p.telecom?.get(0)?.value
+                mPatient.atributes.add(personAttribute)
+            }
 
             // Patient.id -> Patient.uuid
             mPatient.uuid = p.id
@@ -230,6 +237,18 @@ class FhirTranslation {
             a.atributes.add(personAttribute)
 
             return a
+        }
+
+        fun fetchByIdAndTranslate(resource: String, id: String) : muzimaPatient {
+            if(resource == "Patient") {
+                lateinit var fhirPatient: fhirPatient
+                runBlocking {
+                    fhirPatient = patientDao.getPatient(id)
+                }
+                var muzimaPatient: muzimaPatient = toMuzimaObject(fhirPatient) as muzimaPatient
+                return muzimaPatient
+            }
+            throw java.lang.IllegalArgumentException("No resource matching argument $resource")
         }
     }
 
