@@ -15,20 +15,22 @@
         <activity android:name=".activity.IntentActivity">
             <intent-filter>
                 <action android:name="com.muzima.muzimafhir.ACTION_INSERT_RESOURCE" />
+                <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="text/plain" />
             </intent-filter>
             <intent-filter>
                 <action android:name="com.muzima.muzimafhir.ACTION_REQUEST_RESOURCE" />
+                <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
         <activity android:name=".activity.DisplayResourcesActivity">
-            <!--
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            -->
+
         </activity>
         <activity android:name=".activity.EncounterActivity" />
         <activity android:name=".activity.PatientActivity" />
