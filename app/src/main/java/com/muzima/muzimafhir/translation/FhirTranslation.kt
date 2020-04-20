@@ -94,7 +94,10 @@ class FhirTranslation {
             }
             mPatient.identifiers = patientIdentifiers
             // not patient.active -> patient.isVoided
-            mPatient.isVoided = !p.active!!
+
+            if (p.active != null) {
+                mPatient.isVoided = !p.active!!
+            }
 
             // Patient.telecom -> List: Patient.attribute.phone
             if(p.telecom?.size!! > 0) {
