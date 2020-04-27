@@ -6,6 +6,7 @@ import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
 import com.muzima.muzimafhir.data.fhir.Patient
 import com.muzima.muzimafhir.data.fhir.types.Address
+import com.muzima.muzimafhir.data.fhir.types.Extension
 import com.muzima.muzimafhir.data.fhir.types.HumanName
 import com.muzima.muzimafhir.data.fhir.types.Identifier
 import com.muzima.muzimafhir.fhir.client.ApplicationGraphQLClient
@@ -82,6 +83,17 @@ class PatientQuery {
                                     }
                                     if (p?.deceasedDateTime() != null) {
                                         patient.deceasedDateTime = Date.from(Instant.parse(p.deceasedDateTime().toString()))
+                                    }
+                                    if (p?.extension() != null) {
+                                        p.extension()?.forEach { extension ->
+                                            Log.d(TAG, "Extension ${extension.url()} found")
+                                            if(extension.url() == "com.muzima.Patient.birthdateEstimated"){
+                                                var mExtension = Extension()
+                                                mExtension.url = "com.muzima.Patient.birthdateEstimated"
+                                                mExtension.value = extension.valueBoolean()
+                                                patient.extension?.add(mExtension)
+                                            }
+                                        }
                                     }
 
                                 } ?: Log.d(TAG, "Patient was null")

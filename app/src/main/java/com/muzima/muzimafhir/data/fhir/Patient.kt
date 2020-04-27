@@ -14,7 +14,8 @@ data class Patient(
         var photo: Attachment? = null,
         var active: Boolean? = null,
         var deceasedBoolean: Boolean? = null,
-        var deceasedDateTime: Date? = null
+        var deceasedDateTime: Date? = null,
+        var extension: MutableList<Extension>? = mutableListOf()
 
 ) {
     override fun toString(): String {

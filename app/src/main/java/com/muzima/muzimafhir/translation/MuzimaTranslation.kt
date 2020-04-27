@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.gson.Gson
 import com.muzima.muzimafhir.data.fhir.types.Address
 import com.muzima.muzimafhir.data.fhir.types.ContactPoint
+import com.muzima.muzimafhir.data.fhir.types.Extension
 import com.muzima.muzimafhir.data.fhir.types.HumanName
 import com.muzima.muzimafhir.fhir.dao.PatientDao
 import com.muzima.muzimafhir.fhir.dao.implementation.PatientDaoImpl
@@ -77,6 +78,11 @@ class MuzimaTranslation {
             fhirTelecom.value = muzimaAttribute?.attribute
             fhirPatient.id = muzimaPatient.uuid
 
+            var extension = Extension()
+            extension.url = "com.muzima.Patient.birthdateEstimated"
+            extension.value = muzimaPatient.birthdateEstimated
+            fhirPatient.extension?.add(extension)
+
             return fhirPatient
         }
 
@@ -93,6 +99,7 @@ class MuzimaTranslation {
                 val addressInputList = mutableListOf<Address_Input>()
                 val nameInputList = mutableListOf<HumanName_Input>()
                 val telecomInputList = mutableListOf<ContactPoint_Input>()
+                val extensionInputList = mutableListOf<Extension_Input>()
 
                 fhirPatient.address?.forEach { address ->
                     var temp = Address_Input.builder()
@@ -121,6 +128,16 @@ class MuzimaTranslation {
                     telecomInputList.add(temp)
                 }
 
+                fhirPatient.extension?.forEach { extension ->
+                    if(extension.url == "com.muzima.Patient.birthdateEstimated"){
+                        val temp = Extension_Input.builder()
+                                .url("com.muzima.Patient.birthdateEstimated")
+                                .valueBoolean(extension.value as Boolean)
+                                .build()
+                        extensionInputList.add(temp)
+                    }
+                }
+
                 val input = Patient_Input.builder()
                         .active(fhirPatient.active)
                         .gender(fhirPatient.gender)
@@ -130,6 +147,7 @@ class MuzimaTranslation {
                         .id(fhirPatient.id)
                         .telecom(telecomInputList)
                         .resourceType(Patient_Enum_input.PATIENT)
+                        .extension(extensionInputList)
                         .build()
 
                 val id = fhirPatient.id

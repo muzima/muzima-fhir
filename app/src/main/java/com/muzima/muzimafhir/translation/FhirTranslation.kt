@@ -18,6 +18,9 @@ import com.muzima.muzimafhir.data.muzima.Patient as muzimaPatient
 
 class FhirTranslation {
     companion object {
+
+        val TAG = "FhirTranslation"
+
         val patientDao: PatientDao = PatientDaoImpl()
 
         fun toMuzimaObject(fhirObject: Any) : Any {
@@ -111,6 +114,12 @@ class FhirTranslation {
 
             // Patient.id -> Patient.uuid
             mPatient.uuid = p.id
+
+            p.extension?.forEach { extension ->
+                if(extension.url == "com.muzima.Patient.birthdateEstimated"){
+                    mPatient.birthdateEstimated = extension.value == true
+                }
+            }
 
             return mPatient
         }

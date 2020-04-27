@@ -17,8 +17,11 @@ mutation PatientCreate($patient: Patient_Input!, $id: id) {
         address {
             line
         }
-
         deceasedBoolean
         deceasedDateTime
+        extension {
+            url
+            valueBoolean
+        }
     }
 }

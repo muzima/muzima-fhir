@@ -23,5 +23,9 @@ query GetPatientById($id:token) {
         }
         deceasedBoolean
         deceasedDateTime
+        extension {
+            url
+            valueBoolean
+        }
     }
 }
