@@ -31,7 +31,7 @@ class FhirTranslation {
                 //return fhirLocationToMuzimaLocation(fhirObject)
             }
             if(fhirObject is fhirPatient){
-                return fhirPatientToMuzimaPatient(fhirObject)
+                return PatientTranslation.fhirPatientToMuzimaPatient(fhirObject)
             }
             throw IllegalArgumentException("Valid argument required")
         }
@@ -43,86 +43,6 @@ class FhirTranslation {
             return a
         }
 
-
-        private fun fhirPatientToMuzimaPatient(p: fhirPatient) : muzimaPatient {
-            var mPatient = muzimaPatient()
-            // FHIR -> OpenMRS
-            /*List: Patient.address -> List: Patient.address
-                address.use == preferred -> address.isPreferred
-                address.country -> address.country
-                address.postalCode -> address.postalCode
-                address.line[0] -> address.address1
-                address.city -> address.cityVillage
-            */
-            var addresses = mutableListOf<PersonAddress>()
-            p.address?.forEach {fAddress ->
-                var mAddress = PersonAddress()
-                mAddress.isPreferred = fAddress.use == "usual"
-                mAddress.country = fAddress.country
-                mAddress.postalCode = fAddress.postalCode
-                mAddress.address1 = fAddress.line?.get(0)
-                mAddress.cityVillage = fAddress.city
-                mAddress.stateProvince = fAddress.state
-                addresses.add(mAddress)
-            }
-            mPatient.addresses = addresses
-            //Address END
-            // patient.gender -> patient.gender
-            mPatient.gender = p.gender
-            // patient.birthdate -> patient.birthdate
-            mPatient.birthdate = p.birthDate
-            /* List: Patient.names -> Patient.names
-                name.family -> name.familyName
-                name.use == preferred -> name.isPreferred
-                (List) name.given (concatenated) -> name.givenName
-             */
-            var names = mutableListOf<PersonName>()
-            p.name?.forEach { fName ->
-                var mName = PersonName()
-                mName.familyName = fName.family
-                mName.isPreferred = fName.use == "usual"
-                mName.givenName = fName.given.joinToString(" ")
-                names.add(mName)
-            }
-            mPatient.names = names
-            //Names END
-            /*  List: Patient.identifier -> Patient.identifiers
-                  identifier.value -> PatientIdentifer.identifier
-             */
-            var patientIdentifiers = mutableListOf<PatientIdentifier>()
-            p.identifier?.forEach { identifier ->
-                var patientIdentifier = PatientIdentifier()
-                patientIdentifier.identifier = identifier.value
-                patientIdentifiers.add(patientIdentifier)
-            }
-            mPatient.identifiers = patientIdentifiers
-            // not patient.active -> patient.isVoided
-
-            if (p.active != null) {
-                mPatient.isVoided = !p.active!!
-            }
-
-            // Patient.telecom -> List: Patient.attribute.phone
-            if(p.telecom?.size!! > 0) {
-                var personAttribute = PersonAttribute()
-                var personAttributeType = PersonAttributeType()
-                personAttributeType.name = "phone"
-                personAttribute.attributeType = personAttributeType
-                if (p.telecom?.size!! > 0) personAttribute.attribute = p.telecom?.get(0)?.value
-                mPatient.atributes.add(personAttribute)
-            }
-
-            // Patient.id -> Patient.uuid
-            mPatient.uuid = p.id
-
-            p.extension?.forEach { extension ->
-                if(extension.url == "com.muzima.Patient.birthdateEstimated"){
-                    mPatient.birthdateEstimated = extension.value == true
-                }
-            }
-
-            return mPatient
-        }
 
         /*
         private fun fhirEncounterToMuzimaEncounter(e: fhirEncounter) : muzimaEncounter {
